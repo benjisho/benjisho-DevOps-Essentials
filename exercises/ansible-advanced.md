@@ -84,8 +84,8 @@ In this exercise, you will learn how to provision and configure infrastructure u
    ```
 2. Create an Ansible playbook named playbook.yml and open it in a text editor:
    ```
-touch playbook.yml
-nano playbook.yml
+   touch playbook.yml
+   nano playbook.yml
    ```
 3. Add the following code to the playbook.yml file to configure the provisioned virtual machine:
    ```
@@ -104,7 +104,7 @@ nano playbook.yml
 
 4. Save and close the playbook.yml file.
 
-Step 4: Execute the Ansible playbook
+## Step 4: Execute the Ansible playbook
 1. Run the Ansible playbook using the following command, specifying the inventory file and playbook file:
 
    ```
@@ -112,7 +112,7 @@ Step 4: Execute the Ansible playbook
    ```
 2. Replace <path-to-inventory-file> with the path to your inventory file or specify the target host directly.
 
-Example:
+   Example:
    ```
    ansible-playbook -i inventory.ini playbook.yml
    ```
