@@ -116,6 +116,7 @@ Example:
    ```
    ansible-playbook -i inventory.ini playbook.yml
    ```
+
 3. Ansible will connect to the target host and execute the defined tasks, ensuring the desired infrastructure configuration.
 
 Congratulations! You have automated the provisioning and configuration of infrastructure using Ansible and Terraform.
