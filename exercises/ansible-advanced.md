@@ -1,122 +1,124 @@
-# Exercise 3: Infrastructure Provisioning and Configuration with Ansible and Terraform
+# Exercise 3: Advanced Ansible - Role-based Development and Ansible Galaxy
 
-In this exercise, you will learn how to provision and configure infrastructure using Ansible and Terraform. By the end of this exercise, you will have automated the provisioning of a virtual machine using Terraform and configured it using Ansible.
+In this exercise, you will dive deeper into Ansible by exploring advanced topics such as role-based development and utilizing Ansible Galaxy. By the end of this exercise, you will have a solid understanding of how to structure your Ansible projects using roles and leverage Ansible Galaxy to enhance your automation capabilities.
 
 ## Table of Contents
 
-- [Step 1: Install Ansible and Terraform on your Ubuntu machine](#step-1-install-ansible-and-terraform-on-your-ubuntu-machine)
-- [Step 2: Provision a virtual machine using Terraform](#step-2-provision-a-virtual-machine-using-terraform)
-- [Step 3: Write an Ansible playbook for infrastructure configuration](#step-3-write-an-ansible-playbook-for-infrastructure-configuration)
-- [Step 4: Execute the Ansible playbook](#step-4-execute-the-ansible-playbook)
+- [Prerequisites](#prerequisites)
+- [Step 1: Understanding Role-based Development](#step-1-understanding-role-based-development)
+- [Step 2: Exploring Ansible Galaxy](#step-2-exploring-ansible-galaxy)
+- [Step 3: Creating and Using Roles in Your Ansible Project](#step-3-creating-and-using-roles-in-your-ansible-project)
+- [Step 4: Testing and Executing Your Advanced Ansible Project](#step-4-testing-and-executing-your-advanced-ansible-project)
 
-## Step 1: Install Ansible and Terraform on your Ubuntu machine
+## Prerequisites
 
-1. Open a terminal.
+- Ansible installed on your Ubuntu machine
+- Basic knowledge of Ansible concepts and playbook development
 
-2. Install Ansible:
-   - Run the following commands to add the Ansible repository and install Ansible:
-     ```bash
-     sudo apt update
-     sudo apt install software-properties-common
-     sudo apt-add-repository --yes --update ppa:ansible/ansible
-     sudo apt install ansible
-     ```
-   - Verify the installation by running `ansible --version`.
+## Step 1: Understanding Role-based Development
 
-3. Install Terraform:
-   - Run the following commands to install Terraform:
-     ```bash
-     sudo apt update
-     sudo apt install wget unzip
-     wget https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_linux_amd64.zip
-     unzip terraform_1.0.8_linux_amd64.zip
-     sudo mv terraform /usr/local/bin/
-     ```
-   - Verify the installation by running `terraform version`.
+1. Roles provide a way to organize and structure your Ansible code by grouping related tasks, variables, and templates into reusable units. They promote code reusability and modularity in your Ansible projects.
 
-## Step 2: Provision a virtual machine using Terraform
+2. Ansible roles follow a specific directory structure. Here's an example directory structure for an Ansible role named `webserver`:
 
-1. Create a new directory for your Terraform project:
-   ```bash
-   mkdir terraform-project
-   cd terraform-project
+   ```plaintext
+   webserver/
+   ├── tasks/
+   │   └── main.yml
+   ├── templates/
+   │   └── index.html.j2
+   ├── vars/
+   │   └── main.yml
+   ├── meta/
+   │   └── main.yml
+   ├── group_vars/
+   │   └── all.yml
+   ├── host_vars/
+   │   └── server1.yml
+   ├── requirements.yml
+   └── README.md
    ```
-2. Create a Terraform configuration file named main.tf and open it in a text editor:
-   ```
-   touch main.tf
-   nano main.tf
-   ```
-3. Add the following code to the main.tf file to define the Vultr provider and specify the desired infrastructure resources (e.g., virtual machine):
-   ```
-   provider "vultr" {
-     api_key = "<your-vultr-api-key>"
-   }
+   - The tasks directory contains the main tasks file (main.yml) that defines the actions to be performed.
+   - The templates directory stores the template files used by the role.
+   - The vars directory contains variable files (main.yml) that define role-specific variables.
+   - The meta directory stores metadata about the role, such as dependencies.
+   - The group_vars and host_vars directories store variable files specific to groups or hosts.
+   - The requirements.yml file specifies any external role dependencies.
+   - The README.md file provides documentation about the role.
 
-   resource "vultr_server" "example" {
-     plan      = "vc2-1c-1gb"
-     region    = "ams"
-     hostname  = "my-vm"
-     label     = "my-vm"
-     os_id     = 387
-   }
-   ```
-4. Save and close the main.tf file.
-5. Initialize the Terraform working directory:
-   ```
-   terraform init
-   ```
+3. Each file in the directory structure serves a specific purpose. Here's an example code snippet for each file:
 
-7. Preview the changes that Terraform will make:
-   ```
-   terraform plan
-   ```
-8. Apply the Terraform configuration to create the infrastructure resources:
-   ```
-   terraform apply
-   ```
-9. When prompted, type yes to confirm and proceed with the resource creation.
+tasks/main.yml:
 
-## Step 3: Write an Ansible playbook for infrastructure configuration
-1. Create a new directory for your Ansible project:
-   ```
-   mkdir ansible-project
-   cd ansible-project
-   ```
-2. Create an Ansible playbook named playbook.yml and open it in a text editor:
-   ```
-   touch playbook.yml
-   nano playbook.yml
-   ```
-3. Add the following code to the playbook.yml file to configure the provisioned virtual machine:
-   ```
-   ---
-   - name: Configure web server
-   hosts: my-vm
-   become: true
+```
+---
+- name: Install and configure web server
+  apt:
+    name: apache2
+    state: latest
+  notify: Restart Apache
+```
+templates/index.html.j2:
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to my website</title>
+</head>
+<body>
+    <h1>Welcome!</h1>
+</body>
+</html>
+```
 
-   tasks:
-      - name: Install Nginx
-         apt:
-         name: nginx
-         state: present
-         tags: nginx
-   ```
+vars/main.yml:
 
-4. Save and close the playbook.yml file.
+```
+---
+webserver_port: 80
+```
+meta/main.yml:
 
-## Step 4: Execute the Ansible playbook
-1. Run the Ansible playbook using the following command, specifying the inventory file and playbook file:
+```
+---
+dependencies:
+  - role: common
+```
+group_vars/all.yml:
 
-   ```
-   ansible-playbook -i <path-to-inventory-file> playbook.yml
-   ```
-2. Replace <path-to-inventory-file> with the path to your inventory file or specify the target host directly.
+```
+---
+webserver_domain: example.com
+```
+host_vars/server1.yml:
 
-   Example:
-   ```
-   ansible-playbook -i inventory.ini playbook.yml
-   ```
+```
+---
+webserver_ip: 192.168.1.100
+```
 
-3. Ansible will connect to the target host and execute the defined tasks, ensuring the desired infrastructure configuration.
+## Step 2: Exploring Ansible Galaxy
+1. Ansible Galaxy is a repository for Ansible roles that allows you to discover, share, and reuse pre-built Ansible roles developed by the community. It provides a centralized location for finding and contributing to the Ansible ecosystem.
 
-Congratulations! You have automated the provisioning and configuration of infrastructure using Ansible and Terraform.
+2. Browse the Ansible Galaxy website (https://galaxy.ansible.com/) to explore the available roles and their functionalities. Identify roles that align with your project requirements.
+
+3. To install an Ansible role from Ansible Galaxy, use the ansible-galaxy command. For example, to install the nginx role, run the following command:
+
+```
+ansible-galaxy install nginx
+```
+This command installs the nginx role, along with any role dependencies specified in the `meta/main.yml` file of the role.
+
+## Step 3: Creating and Using Roles in Your Ansible Project
+1. Structure your Ansible project using roles. Create the necessary directories and files for your roles based on the role-based development approach.
+
+2. Move your existing tasks, variables, and templates into separate roles. Refactor your Ansible playbooks to use these roles.
+
+3. Enhance your project by incorporating external roles from Ansible Galaxy. Update your playbooks to include the roles you installed from Ansible Galaxy.
+
+## Step 4: Testing and Executing Your Advanced Ansible Project
+1. Verify the correctness of your role-based Ansible project by running test playbooks against your target hosts.
+
+2. Execute your advanced Ansible project and observe the changes and configuration applied to your target hosts.
+
+Congratulations! You have learned advanced Ansible techniques such as role-based development and utilizing Ansible Galaxy. These skills will enable you to structure your Ansible projects effectively and leverage the power of community-contributed roles.
