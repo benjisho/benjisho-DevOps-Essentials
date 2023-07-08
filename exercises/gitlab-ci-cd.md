@@ -15,15 +15,13 @@ Before starting this exercise, ensure that you have the following:
 - A Vultr environment set up to install GitLab.
 ## Step 1: Setup/Install GitLab on your Vultr environment
 
-1. Follow the official GitLab installation documentation:
+1. You may create an account on https://gitlab.com/ and set up a project there.
+2. Alternatively, Follow the official GitLab installation documentation:
 
    - For Ubuntu: [GitLab Installation Documentation for Ubuntu](https://docs.gitlab.com/)
+     Install GitLab for Ubuntu according to the provided instructions in the documentation.
 
-2. Install GitLab for Ubuntu according to the provided instructions in the documentation.
-
-3. Alternatively, you can use the [One-Click GitLab](https://www.vultr.com/docs/one-click-gitlab/) option provided by Vultr to quickly set up a GitLab environment.
-
-4. Additionally, you may create an account on https://gitlab.com/ and set up a project there.
+4. Additionally, you can use the [One-Click GitLab](https://www.vultr.com/docs/one-click-gitlab/) option provided by Vultr to quickly set up a GitLab environment.
 
 ## Step 2: Create a sample project and configure CI/CD pipeline
 
