@@ -38,219 +38,330 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
 
 2. Inside the project directory, create the following files and directories for organizing your Terraform configuration:
 
-   ```
-   ├── main.tf
-   ├── variables.tf
-   ├── outputs.tf
-   ├── modules/
-   │   ├── aws/
-   │   │   ├── main.tf
-   │   │   ├── variables.tf
-   │   │   └── outputs.tf
-   │ └── vultr/
-   │ ├── main.tf
-   │ ├── variables.tf
-   │ └── outputs.tf
-   │   └── module3/
-   │       ├── main.tf
-   │       ├── variables.tf
-   │       └── outputs.tf
-   ├── environments/
-   │   ├── prod/
-   │   │   ├── main.tf
-   │   │   ├── variables.tf
-   │   │   └── outputs.tf
-   │   └── staging/
-   │       ├── main.tf
-   │       ├── variables.tf
-   │       └── outputs.tf
-   ├── terraform.tfvars
-   └── README.md
-   ```
+    ```
+    ├── main.tf
+    ├── variables.tf
+    ├── outputs.tf
+    ├── modules/
+    │   ├── aws/
+    │   │   ├── main.tf
+    │   │   ├── variables.tf
+    │   │   └── outputs.tf
+    │ └── vultr/
+    │ ├── main.tf
+    │ ├── variables.tf
+    │ └── outputs.tf
+    │   └── module3/
+    │       ├── main.tf
+    │       ├── variables.tf
+    │       └── outputs.tf
+    ├── environments/
+    │   ├── prod/
+    │   │   ├── main.tf
+    │   │   ├── variables.tf
+    │   │   └── outputs.tf
+    │   └── staging/
+    │       ├── main.tf
+    │       ├── variables.tf
+    │       └── outputs.tf
+    ├── terraform.tfvars
+    └── README.md
+    ```
 
 3. In the `main.tf` file, define the main Terraform configuration. This file can include provider configuration, resource definitions, and data sources.
-   **Example `main.tf`:**
-   ```
-   terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "3.48.0"
+
+    **Example `main.tf`:**
+
+    ```
+    terraform {
+      required_providers {
+        aws = {
+          source  = "hashicorp/aws"
+          version = "3.48.0"
+        }
+        vultr = {
+          source  = "vultr/vultr"
+          version = "2.19.0"
+        }
+      }
     }
-    vultr = {
-      source  = "vultr/vultr"
-      version = "2.19.0"
+
+    provider "aws" {
+      region = var.aws_region
     }
-  }
-}
 
-provider "aws" {
-  region = var.aws_region
-}
+    provider "vultr" {
+      api_key = var.vultr_api_key
+    }
 
-provider "vultr" {
-  api_key = var.vultr_api_key
-}
+    resource "aws_instance" "example" {
+      ami           = var.aws_ami
+      instance_type = var.aws_instance_type
+      tags = {
+        Name = "Example Instance"
+      }
+    }
 
-resource "aws_instance" "example" {
-  ami           = var.aws_ami
-  instance_type = var.aws_instance_type
-  tags = {
-    Name = "Example Instance"
-  }
-}
+    resource "vultr_server" "example" {
+      plan     = "vc2-1c-1gb"
+      region   = var.vultr_region
+      hostname = "example-vultr-server"
+    }
+    ```
+  4. In the `variables.tf` file, define input variables that allow customization of your Terraform configuration.
+   
+      **Example `variables.tf`:**
 
-resource "vultr_server" "example" {
-  plan     = "vc2-1c-1gb"
-  region   = var.vultr_region
-  hostname = "example-vultr-server"
-}
-```
-5. In the `variables.tf` file, define input variables that allow customization of your Terraform configuration.
-   **Example `variables.tf`:**
+        ```
+        variable "aws_region" {
+          description = "AWS region"
+          type        = string
+          default     = "us-west-2"
+        }
 
-   ```
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
-  default     = "us-west-2"
-}
+        variable "vultr_region" {
+          description = "Vultr region"
+          type        = string
+          default     = "ams"
+        }
 
-variable "aws_ami" {
-  description = "AWS AMI ID"
-  type        = string
-  default     = "ami-0c94855ba95c71c99"
-}
+        variable "aws_ami" {
+          description = "AMI ID for AWS"
+          type        = string
+          default     = "ami-0c94855ba95c71c99"
+        }
 
-variable "aws_instance_type" {
-  description = "AWS EC2 instance type"
-  type        = string
-  default     = "t2.micro"
-}
+        variable "aws_instance_type" {
+          description = "EC2 instance type for AWS"
+          type        = string
+          default     = "t2.micro"
+        }
 
-variable "vultr_api_key" {
-  description = "Vultr API key"
-  type        = string
-  default     = "your-vultr-api-key"
-}
+        variable "vultr_plan" {
+          description = "Vultr plan"
+          type        = string
+          default     = "vc2-2c-4gb"
+        }
 
-variable "vultr_region" {
-  description = "Vultr region"
-  type        = string
-  default     = "ams"
-}
-```
+        variable "vultr_api_key" {
+          description = "Vultr API key"
+          type        = string
+          sensitive   = true
+        }
+        ```
 
-6. In the `outputs.tf` file, define output values that provide information about the created resources.
-   **Example `outputs.tf`:**
-   ```
-output "aws_instance_id" {
-  description = "ID of the created AWS EC2 instance"
-  value       = aws_instance.example.id
-}
+5. In the `outputs.tf` file, define output values that provide information about the created resources.
 
-output "vultr_server_id" {
-  description = "ID of the created Vultr server"
-  value       = vultr_server.example.id
-}
-```
+    **Example `outputs.tf`:**
 
-8. Inside the modules directory, create separate directories for each module you want to define. Each module should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
-   **Example `modules/aws/main.tf`:**
-   ```
-   resource "aws_s3_bucket" "example" {
-   bucket = var.bucket_name
-   acl    = "private"
-   }
-   ```
-   **Example `modules/aws/variables.tf`:**
-   ```
-   variable "bucket_name" {
-   description = "Name of the S3 bucket"
-   type        = string
-   }
-   ```
-   **Example `modules/aws/outputs.tf`:**
-   ```
-   output "bucket_arn" {
-   description = "ARN of the created S3 bucket"
-   value       = aws_s3_bucket.example.arn
-   }
-   ```
+    ```
+    output "aws_instance_id" {
+      description = "ID of the created AWS EC2 instance"
+      value       = aws_instance.example.id
+    }
+
+    output "vultr_server_id" {
+      description = "ID of the created Vultr server"
+      value       = vultr_server.example.id
+    }
+    ```
+
+6. Inside the modules directory, create separate directories for each module you want to define. Each module should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
+
+    *AWS*
+
+    **Example `modules/aws/main.tf`:**
+
+    ```
+    resource "aws_s3_bucket" "example" {
+    bucket = var.bucket_name
+    acl    = "private"
+    }
+    ```
+
+    **Example `modules/aws/variables.tf`:**
+
+    ```
+    variable "bucket_name" {
+    description = "Name of the S3 bucket"
+    type        = string
+    }
+    ```
+
+    **Example `modules/aws/outputs.tf`:**
+
+    ```
+    output "bucket_arn" {
+    description = "ARN of the created S3 bucket"
+    value       = aws_s3_bucket.example.arn
+    }  
+    ```
+
+    *Vultr*
+
+    **Example modules/vultr/main.tf:**
+
+    ```
+    resource "vultr_block_storage" "example" {
+    label = var.vultr_block_storage_label
+    size  = var.vultr_block_storage_size
+    region = var.vultr_region
+    }
+    ```
+
+    **Example modules/vultr/variables.tf:**
+
+    ```
+    variable "vultr_block_storage_label" {
+      description = "Label for the Vultr block storage"
+      type        = string
+    }
+
+    variable "vultr_block_storage_size" {
+      description = "Size of the Vultr block storage in GB"
+      type        = number
+    }
+    ```
+
+    **Example modules/vultr/outputs.tf:**
+
+    ```
+    output "vultr_block_storage_id" {
+      description = "ID of the created Vultr block storage"
+      value       = vultr_block_storage.example.id
+    }
+    ```
 7. Inside the environments directory, create separate directories for each environment, such as prod and staging. Each environment should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
-   **Example `environments/prod/main.tf`:**
-   ```
-   module "webserver" {
-   source = "../modules/module1"
+    **Example `environments/prod/main.tf`:**
 
-   bucket_name = var.prod_bucket_name
-   }
-   ```
-   **Example `environments/prod/variables.tf`:**
-   ```
-   variable "prod_bucket_name" {
-   description = "Name of the production S3 bucket"
-   type        = string
-   }
-   ```
-   **Example `environments/prod/outputs.tf`:**
-   ```
-   output "prod_bucket_arn" {
-   description = "ARN of the production S3 bucket"
-   value       = module.webserver.bucket_arn
-   }
-   ```
-   **Example `environments/staging/main.tf`:**
-   ```
-   module "webserver" {
-   source = "../modules/module1"
+    ```
+    module "aws_resources" {
+      source = "../modules/aws"
 
-   bucket_name = var.staging_bucket_name
-   }
-   ```
-   **Example `environments/staging/variables.tf`:**
-   ```
-   variable "staging_bucket_name" {
-   description = "Name of the staging S3 bucket"
-   type        = string
-   }
-   ```
-   **Example `environments/staging/outputs.tf`:**
-   ```
-   output "staging_bucket_arn" {
-   description = "ARN of the staging S3 bucket"
-   value       = module.webserver.bucket_arn
-   }
-   ```
+      aws_bucket_name = var.prod_aws_bucket_name
+    }
+
+    module "vultr_resources" {
+      source = "../modules/vultr"
+
+      vultr_block_storage_label = var.prod_vultr_block_storage_label
+      vultr_block_storage_size  = var.prod_vultr_block_storage_size
+    }
+    ```
+
+    **Example `environments/prod/variables.tf`:**
+
+    ```
+    variable "prod_aws_bucket_name" {
+      description = "Name of the production AWS S3 bucket"
+      type        = string
+    }
+
+    variable "prod_vultr_block_storage_label" {
+      description = "Label for the production Vultr block storage"
+      type        = string
+    }
+
+    variable "prod_vultr_block_storage_size" {
+      description = "Size of the production Vultr block storage in GB"
+      type        = number
+    }
+
+    ```
+
+    **Example `environments/prod/outputs.tf`:**
+
+    ```
+    output "prod_aws_bucket_arn" {
+      description = "ARN of the created production AWS S3 bucket"
+      value       = module.aws_resources.aws_bucket_arn
+    }
+
+    output "prod_vultr_block_storage_id" {
+      description = "ID of the created production Vultr block storage"
+      value       = module.vultr_resources.vultr_block_storage_id
+    }
+
+    ```
+
+    **Example `environments/staging/main.tf`:**
+
+    ```
+    module "aws_resources" {
+      source = "../modules/aws"
+
+      aws_bucket_name = var.staging_aws_bucket_name
+    }
+
+    module "vultr_resources" {
+      source = "../modules/vultr"
+
+      vultr_block_storage_label = var.staging_vultr_block_storage_label
+      vultr_block_storage_size  = var.staging_vultr_block_storage_size
+    }
+    ```
+
+    **Example `environments/staging/variables.tf`:**
+
+    ```
+    variable "staging_aws_bucket_name" {
+      description = "Name of the staging AWS S3 bucket"
+      type        = string
+    }
+
+    variable "staging_vultr_block_storage_label" {
+      description = "Label for the staging Vultr block storage"
+      type        = string
+    }
+
+    variable "staging_vultr_block_storage_size" {
+      description = "Size of the staging Vultr block storage in GB"
+      type        = number
+    }
+    ```
+
+    **Example `environments/staging/outputs.tf`:**
+    
+    ```
+    output "staging_aws_bucket_arn" {
+      description = "ARN of the created staging AWS S3 bucket"
+      value       = module.aws_resources.aws_bucket_arn
+    }
+
+    output "staging_vultr_block_storage_id" {
+      description = "ID of the created staging Vultr block storage"
+      value       = module.vultr_resources.vultr_block_storage_id
+    }
+    ```
 8. Use module blocks in your `main.tf` and environment-specific configuration files to reference and configure modules.
 
 ## Step 3: Provision Infrastructure with Terraform
 1. Run the following command in your project directory to initialize Terraform and download the necessary provider plugins:
-   ```
-   terraform init
-   ```
+    ```
+    terraform init
+    ```
 2. Validate the Terraform configuration by running:
-   ```
-   terraform validate
-   ```
+    ```
+    terraform validate
+    ```
 3. Preview the infrastructure changes that Terraform will make by running:
-   ```
-   terraform plan
-   ```
+    ```
+    terraform plan
+    ```
 4. To plan and apply module-specific changes, navigate to the module directory and run the Terraform commands with the -target flag. For example:
-   ```
-   terraform plan -target=module.module1
-   terraform apply -target=module.module1
-   ```
+    ```
+    terraform plan -target=module.module1
+    terraform apply -target=module.module1
+    ```
 5. To plan and apply environment-specific changes, navigate to the environment directory and run the Terraform commands. For example:
-   ```
-   terraform plan
-   terraform apply
-   ```
+    ```
+    terraform plan
+    terraform apply
+    ```
 6. If the plan looks as expected, apply the infrastructure changes by running:
-   ```
-   terraform apply
-   ```
+    ```
+    terraform apply
+    ```
 7. You may be prompted to confirm the changes before proceeding.
 
 8. Terraform will provision the defined infrastructure resources based on the configuration.
