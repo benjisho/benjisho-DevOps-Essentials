@@ -45,7 +45,11 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    │   │   ├── main.tf
    │   │   ├── variables.tf
    │   │   └── outputs.tf
-   │   └── module2/
+   │ └── vultr/
+   │ ├── main.tf
+   │ ├── variables.tf
+   │ └── outputs.tf
+   │   └── module3/
    │       ├── main.tf
    │       ├── variables.tf
    │       └── outputs.tf
