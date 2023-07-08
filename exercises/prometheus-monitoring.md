@@ -66,6 +66,7 @@ In this exercise, you will learn how to implement monitoring using Prometheus. P
         ```
         This command will search the entire filesystem (/) for any file named prometheus.yml and display the paths where it is found.
 2. Specify the scrape configuration to determine the targets from which Prometheus should collect metrics. For example:
+   - This will configure Prometheus to monitor itself
    ```
    global:
      scrape_interval: 15s
@@ -79,7 +80,6 @@ In this exercise, you will learn how to implement monitoring using Prometheus. P
        static_configs:
          - targets: ['localhost:9090']
    ```
-   - This will configure Prometheus to monitor itself
 3. Configure additional settings such as retention policies, alerting rules, and recording rules based on your monitoring requirements.
 
 4. Verify the syntax of the Prometheus configuration by running the following command:
