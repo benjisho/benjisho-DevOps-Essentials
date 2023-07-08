@@ -16,13 +16,11 @@ Before starting this exercise, ensure that you have the following:
 ## Step 1: Setup/Install GitLab on your Vultr environment
 
 1. You may create an account on https://gitlab.com/ and set up a project there.
-2. Alternatively, Follow the official GitLab installation documentation:
+2. Alternatively, you can use the [One-Click GitLab](https://www.vultr.com/docs/one-click-gitlab/) option provided by Vultr to quickly set up a GitLab environment.
+3. Additionally, Follow the official GitLab installation documentation:
 
    - For Ubuntu: [GitLab Installation Documentation for Ubuntu](https://docs.gitlab.com/)
      Install GitLab for Ubuntu according to the provided instructions in the documentation.
-
-4. Additionally, you can use the [One-Click GitLab](https://www.vultr.com/docs/one-click-gitlab/) option provided by Vultr to quickly set up a GitLab environment.
-
 ## Step 2: Create a sample project and configure CI/CD pipeline
 
 1. Once GitLab is installed, access the GitLab web interface by opening your web browser and navigating to the GitLab URL. If you installed GitLab locally, the URL might be http://localhost or http://localhost:3000 by default. If you are using GitLab's hosted service on gitlab.com, access your project by logging into your gitlab.com account.
