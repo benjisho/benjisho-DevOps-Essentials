@@ -21,17 +21,21 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
 
 1. Open a terminal.
 
-2. Download the latest version of Terraform from the official website (https://www.terraform.io/downloads.html).
-
-3. Extract the downloaded archive to obtain the Terraform binary.
-
-4. Move the Terraform binary to a directory in your system's `PATH` to make it executable.
-
-5. Verify the Terraform installation by running the following command:
+2. Run the following commands to add the HashiCorp GPG key and repository to your system:
+   ```
+   wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+   echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+   sudo apt update
+   ```
+3. Install Terraform using the package manager:
+   ```
+   sudo apt install terraform
+   ```
+4. Verify the Terraform installation by running the following command:
    ```
    terraform version
    ```
-7. You should see the Terraform version displayed in the output.
+You should see the Terraform version displayed in the output.
 
 ## Step 2: Define Infrastructure with Terraform
 1. Create a new directory for your Terraform project.
