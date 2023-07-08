@@ -12,13 +12,14 @@ In this exercise, you will learn how to implement Continuous Delivery (CD) using
 
 Before starting this exercise, ensure that you have the following:
 
-- A Vultr environment set up to [install GitLab](https://www.vultr.com/docs/one-click-gitlab/). Follow the instructions provided by Vultr to set up your environment.
-
+- A Vultr environment set up to install GitLab.
 ## Step 1: Install GitLab on your Vultr environment
 
-1. Follow the official GitLab installation documentation for Ubuntu: [GitLab Installation Documentation](https://docs.gitlab.com/)
+1. Follow the official GitLab installation documentation:
 
-2. Install GitLab according to the provided instructions in the documentation.
+2. Install GitLab for Ubuntu according to the provided instructions in the documentation. - [GitLab Installation Documentation](https://docs.gitlab.com/)
+
+3. Another option is to use [One-Click GitLab](https://www.vultr.com/docs/one-click-gitlab/) provided by Vultr.
 
 ## Step 2: Create a sample project and configure CI/CD pipeline
 
