@@ -36,12 +36,12 @@ In this exercise, you will learn how to implement monitoring using Prometheus. P
 1. Create a configuration file named prometheus.yml to define the Prometheus configuration.
 
 2. Specify the scrape configuration to determine the targets from which Prometheus should collect metrics. For example:
-  ```
-  scrape_configs:
-    - job_name: 'myapp'
-      static_configs:
-        - targets: ['localhost:9090', 'localhost:8080']
-  ```
+   ```
+   scrape_configs:
+     - job_name: 'myapp'
+       static_configs:
+         - targets: ['localhost:9090', 'localhost:8080']
+   ```
 
 3. Configure additional settings such as retention policies, alerting rules, and recording rules based on your monitoring requirements.
 
