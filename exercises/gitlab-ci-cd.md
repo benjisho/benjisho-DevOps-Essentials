@@ -13,7 +13,7 @@ In this exercise, you will learn how to implement Continuous Delivery (CD) using
 Before starting this exercise, ensure that you have the following:
 
 - A Vultr environment set up to install GitLab.
-## Step 1: Install GitLab on your Vultr environment
+## Step 1: Setup/Install GitLab on your Vultr environment
 
 1. Follow the official GitLab installation documentation:
 
