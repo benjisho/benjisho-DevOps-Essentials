@@ -21,7 +21,7 @@ In this exercise, you will dive deeper into Ansible by exploring advanced topics
 
 2. Ansible roles follow a specific directory structure. Here's an example directory structure for an Ansible role named `webserver`:
 
-   ```plaintext
+   ```
    webserver/
    ├── tasks/
    │   └── main.yml
