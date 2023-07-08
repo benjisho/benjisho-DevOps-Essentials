@@ -5,17 +5,52 @@ In this exercise, you will dive deeper into Ansible by exploring advanced topics
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [Step 1: Understanding Role-based Development](#step-1-understanding-role-based-development)
-- [Step 2: Exploring Ansible Galaxy](#step-2-exploring-ansible-galaxy)
-- [Step 3: Creating and Using Roles in Your Ansible Project](#step-3-creating-and-using-roles-in-your-ansible-project)
-- [Step 4: Testing and Executing Your Advanced Ansible Project](#step-4-testing-and-executing-your-advanced-ansible-project)
+- [Step 1: Installing Ansible on Ubuntu](#step-1-installing-ansible-on-ubuntu)
+- [Step 2: Understanding Role-based Development](#step-2-understanding-role-based-development)
+- [Step 3: Exploring Ansible Galaxy](#step-3-exploring-ansible-galaxy)
+- [Step 4: Creating and Using Roles in Your Ansible Project](#step-4-creating-and-using-roles-in-your-ansible-project)
+- [Step 5: Testing and Executing Your Advanced Ansible Project](#step-5-testing-and-executing-your-advanced-ansible-project)
 
 ## Prerequisites
 
 - Ansible installed on your Ubuntu machine
 - Basic knowledge of Ansible concepts and playbook development
 
-## Step 1: Understanding Role-based Development
+## Step 1: Installing Ansible on Ubuntu
+To install Ansible on Ubuntu, you can use the following steps:
+
+1. Open a terminal.
+
+2. Update the package lists using the following command:
+   ```
+   sudo apt update
+   ```
+3. Install the software-properties-common package, which provides the add-apt-repository command:
+   ```
+   sudo apt install software-properties-common
+   ```
+4. Add the Ansible PPA repository to your system:
+   ```
+   sudo add-apt-repository --yes --update ppa:ansible/ansible
+   ```
+   - This command configures the PPA on your system and ensures that it is up to date.
+
+6. Install Ansible:
+   ```
+   sudo apt install ansible
+   ```
+7. The installation process will download and install Ansible along with its dependencies.
+
+### Note:
+On older Ubuntu distributions, the software-properties-common package is called python-software-properties. You may need to use apt-get instead of apt in older versions.
+If you encounter an error related to the -u or --update flag, it means that your Ubuntu version does not support it. In that case, you can omit the --update flag from the add-apt-repository command.
+Once the installation is complete, you can verify that Ansible is installed by running the following command:
+```
+ansible --version
+```
+- This command will display the Ansible version information if the installation was successful.
+
+## Step 2: Understanding Role-based Development
 
 1. Roles provide a way to organize and structure your Ansible code by grouping related tasks, variables, and templates into reusable units. They promote code reusability and modularity in your Ansible projects.
 
@@ -97,7 +132,7 @@ host_vars/server1.yml:
 webserver_ip: 192.168.1.100
 ```
 
-## Step 2: Exploring Ansible Galaxy
+## Step 3: Exploring Ansible Galaxy
 1. Ansible Galaxy is a repository for Ansible roles that allows you to discover, share, and reuse pre-built Ansible roles developed by the community. It provides a centralized location for finding and contributing to the Ansible ecosystem.
 
 2. Browse the Ansible Galaxy website (https://galaxy.ansible.com/) to explore the available roles and their functionalities. Identify roles that align with your project requirements.
@@ -109,14 +144,14 @@ ansible-galaxy install nginx
 ```
 This command installs the nginx role, along with any role dependencies specified in the `meta/main.yml` file of the role.
 
-## Step 3: Creating and Using Roles in Your Ansible Project
+## Step 4: Creating and Using Roles in Your Ansible Project
 1. Structure your Ansible project using roles. Create the necessary directories and files for your roles based on the role-based development approach.
 
 2. Move your existing tasks, variables, and templates into separate roles. Refactor your Ansible playbooks to use these roles.
 
 3. Enhance your project by incorporating external roles from Ansible Galaxy. Update your playbooks to include the roles you installed from Ansible Galaxy.
 
-## Step 4: Testing and Executing Your Advanced Ansible Project
+## Step 5: Testing and Executing Your Advanced Ansible Project
 1. Verify the correctness of your role-based Ansible project by running test playbooks against your target hosts.
 
 2. Execute your advanced Ansible project and observe the changes and configuration applied to your target hosts.
