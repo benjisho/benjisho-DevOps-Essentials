@@ -17,8 +17,7 @@ Before starting this exercise, ensure that you have the following:
 
 1. You may create an account on https://gitlab.com/ and set up a project there.
 2. Alternatively, you can use the [One-Click GitLab](https://www.vultr.com/docs/one-click-gitlab/) option provided by Vultr to quickly set up a GitLab environment.
-3. Additionally, Follow the official GitLab installation documentation:
-
+3. Additionally, if you want to go through the manual process, you may follow the official GitLab installation documentation:
    - For Ubuntu: [GitLab Installation Documentation for Ubuntu](https://docs.gitlab.com/)
      Install GitLab for Ubuntu according to the provided instructions in the documentation.
 ## Step 2: Create a sample project and configure CI/CD pipeline
