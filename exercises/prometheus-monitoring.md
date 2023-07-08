@@ -27,7 +27,10 @@ In this exercise, you will learn how to implement monitoring using Prometheus. P
    tar xvfz prometheus-*.tar.gz
    ```
 4. Move the Prometheus binary to a directory in your system's `PATH` to make it executable.
-   - Identify the directories in your system's PATH where executables are commonly stored. Some common directories include /usr/local/bin and /usr/bin. You can check the contents of your PATH variable by running the command echo $PATH.
+   - Identify the directories in your system's `PATH` where executables are commonly stored. Some common directories include `/usr/local/bin` and `/usr/bin`. You can check the contents of your `PATH` variable by running the command:
+     ```
+     echo $PATH
+     ```
 
    - Move the Prometheus binary to one of the directories in your PATH. For example, if you want to move it to /usr/local/bin, you can use the following command:
      ```
