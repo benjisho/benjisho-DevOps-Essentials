@@ -14,6 +14,8 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
 
 - Terraform installed on your Ubuntu machine
 - Basic knowledge of infrastructure concepts and cloud providers (e.g., AWS, Azure, GCP)
+- AWS account (https://aws.amazon.com/)
+- Vultr account (https://www.vultr.com/)
 
 ## Step 1: Install Terraform
 
@@ -70,57 +72,88 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    **Example `main.tf`:**
    ```
    terraform {
-   required_providers {
-      aws = {
-         source = "hashicorp/aws"
-         version = "3.48.0"
-      }
-   }
-   }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "3.48.0"
+    }
+    vultr = {
+      source  = "vultr/vultr"
+      version = "2.19.0"
+    }
+  }
+}
 
-   provider "aws" {
-   region = var.region
-   }
+provider "aws" {
+  region = var.aws_region
+}
 
-   resource "aws_instance" "example" {
-   ami           = var.ami
-   instance_type = var.instance_type
-   tags = {
-      Name = "Example Instance"
-   }
-   }
-   ```
+provider "vultr" {
+  api_key = var.vultr_api_key
+}
+
+resource "aws_instance" "example" {
+  ami           = var.aws_ami
+  instance_type = var.aws_instance_type
+  tags = {
+    Name = "Example Instance"
+  }
+}
+
+resource "vultr_server" "example" {
+  plan     = "vc2-1c-1gb"
+  region   = var.vultr_region
+  hostname = "example-vultr-server"
+}
+```
 5. In the `variables.tf` file, define input variables that allow customization of your Terraform configuration.
    **Example `variables.tf`:**
 
    ```
-   variable "region" {
-   description = "AWS region"
-   type        = string
-   default     = "us-west-2"
-   }
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-west-2"
+}
 
-   variable "ami" {
-   description = "AMI ID"
-   type        = string
-   default     = "ami-0c94855ba95c71c99"
-   }
+variable "aws_ami" {
+  description = "AWS AMI ID"
+  type        = string
+  default     = "ami-0c94855ba95c71c99"
+}
 
-   variable "instance_type" {
-   description = "EC2 instance type"
-   type        = string
-   default     = "t2.micro"
-   }
-   ```
+variable "aws_instance_type" {
+  description = "AWS EC2 instance type"
+  type        = string
+  default     = "t2.micro"
+}
+
+variable "vultr_api_key" {
+  description = "Vultr API key"
+  type        = string
+  default     = "your-vultr-api-key"
+}
+
+variable "vultr_region" {
+  description = "Vultr region"
+  type        = string
+  default     = "ams"
+}
+```
 
 6. In the `outputs.tf` file, define output values that provide information about the created resources.
    **Example `outputs.tf`:**
    ```
-   output "instance_id" {
-   description = "ID of the created EC2 instance"
-   value       = aws_instance.example.id
-   }
-   ```
+output "aws_instance_id" {
+  description = "ID of the created AWS EC2 instance"
+  value       = aws_instance.example.id
+}
+
+output "vultr_server_id" {
+  description = "ID of the created Vultr server"
+  value       = vultr_server.example.id
+}
+```
 
 8. Inside the modules directory, create separate directories for each module you want to define. Each module should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
    **Example `modules/aws/main.tf`:**
