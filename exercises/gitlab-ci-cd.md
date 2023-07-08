@@ -21,6 +21,8 @@ Before starting this exercise, ensure that you have the following:
 
 3. Another option is to use [One-Click GitLab](https://www.vultr.com/docs/one-click-gitlab/) provided by Vultr.
 
+4. Additionally you may just create an account in https://gitlab.com/ and set-up a project there.
+
 ## Step 2: Create a sample project and configure CI/CD pipeline
 
 1. Once GitLab is installed, access the GitLab web interface.
