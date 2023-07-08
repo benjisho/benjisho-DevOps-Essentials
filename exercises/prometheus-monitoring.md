@@ -47,13 +47,37 @@ In this exercise, you will learn how to implement monitoring using Prometheus. P
 
 ## Step 2: Configure Prometheus
 1. Create a configuration file named prometheus.yml to define the Prometheus configuration.
-
+   - Typically the Prometheus configuration file (prometheus.yml) is located in the `/etc/prometheus/` directory.
+     However, the exact location may vary depending on your installation method or configuration.
+   - To locate the prometheus.yml file, you can try the following steps:
+      - Open a terminal.
+      - Navigate to the /etc/prometheus/ directory by running the command:
+        ```
+        cd /etc/prometheus/
+        ```
+      - Check if the prometheus.yml file is present in the current directory by running the command:
+        ```
+        ls prometheus.yml
+        ```
+        If the file exists, you will see its name listed in the output.
+      - If the prometheus.yml file is not located in the /etc/prometheus/ directory, you may need to search for it in other locations based on your installation or configuration. You can try searching for the file using the find command:
+        ```
+        sudo find / -name prometheus.yml
+        ```
+        This command will search the entire filesystem (/) for any file named prometheus.yml and display the paths where it is found.
 2. Specify the scrape configuration to determine the targets from which Prometheus should collect metrics. For example:
    ```
+   global:
+     scrape_interval: 15s
+   
+     external_labels:
+       monitor: 'codelab-monitor'
+   
    scrape_configs:
-     - job_name: 'myapp'
+     - job_name: 'prometheus'
+       scrape_interval: 5s
        static_configs:
-         - targets: ['localhost:9090', 'localhost:8080']
+         - targets: ['localhost:9090']
    ```
 
 3. Configure additional settings such as retention policies, alerting rules, and recording rules based on your monitoring requirements.
