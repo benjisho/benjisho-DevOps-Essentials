@@ -20,12 +20,22 @@ In this exercise, you will learn how to implement monitoring using Prometheus. P
 
 1. Open a terminal.
 
-2. Download the latest version of Prometheus from the official Prometheus website (https://prometheus.io/download/).
+2. Download the latest version of Prometheus from the official Prometheus website (https://prometheus.io/download/#prometheus).
 
 3. Extract the downloaded archive to obtain the Prometheus binary.
-
+   ```
+   tar xvfz prometheus-*.tar.gz
+   ```
 4. Move the Prometheus binary to a directory in your system's `PATH` to make it executable.
+   - Identify the directories in your system's PATH where executables are commonly stored. Some common directories include /usr/local/bin and /usr/bin. You can check the contents of your PATH variable by running the command echo $PATH.
 
+   - Move the Prometheus binary to one of the directories in your PATH. For example, if you want to move it to /usr/local/bin, you can use the following command:
+     ```
+     sudo mv prometheus /usr/local/bin/
+     ```
+     Note: You may need to use sudo or run the command as the root user depending on the permissions of the destination directory.
+     - Once the binary is moved, you should be able to run the prometheus command from anywhere in your terminal.
+     - By moving the Prometheus binary to a directory in your system's PATH, you make it accessible as an executable command. This allows you to run prometheus without specifying the full path to the binary.
 5. Verify the Prometheus installation by running the following command:
    ```
    prometheus --version
