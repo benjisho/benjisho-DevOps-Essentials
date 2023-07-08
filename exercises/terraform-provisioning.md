@@ -63,9 +63,7 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    ```
 
 3. In the `main.tf` file, define the main Terraform configuration. This file can include provider configuration, resource definitions, and data sources.
-
-**Example `main.tf`:**
-
+   **Example `main.tf`:**
    ```
    terraform {
    required_providers {
@@ -88,8 +86,9 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    }
    }
    ```
-4. In the `variables.tf` file, define input variables that allow customization of your Terraform configuration.
-**Example `variables.tf`:**
+5. In the `variables.tf` file, define input variables that allow customization of your Terraform configuration.
+   **Example `variables.tf`:**
+
    ```
    variable "region" {
    description = "AWS region"
@@ -110,8 +109,8 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    }
    ```
 
-5. In the `outputs.tf` file, define output values that provide information about the created resources.
-**Example `outputs.tf`:**
+6. In the `outputs.tf` file, define output values that provide information about the created resources.
+   **Example `outputs.tf`:**
    ```
    output "instance_id" {
    description = "ID of the created EC2 instance"
@@ -119,22 +118,22 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    }
    ```
 
-6. Inside the modules directory, create separate directories for each module you want to define. Each module should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
-**Example `modules/aws/main.tf`:**
+8. Inside the modules directory, create separate directories for each module you want to define. Each module should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
+   **Example `modules/aws/main.tf`:**
    ```
    resource "aws_s3_bucket" "example" {
    bucket = var.bucket_name
    acl    = "private"
    }
    ```
-**Example `modules/aws/variables.tf`:**
+   **Example `modules/aws/variables.tf`:**
    ```
    variable "bucket_name" {
    description = "Name of the S3 bucket"
    type        = string
    }
    ```
-**Example `modules/aws/outputs.tf`:**
+   **Example `modules/aws/outputs.tf`:**
    ```
    output "bucket_arn" {
    description = "ARN of the created S3 bucket"
@@ -142,7 +141,7 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    }
    ```
 7. Inside the environments directory, create separate directories for each environment, such as prod and staging. Each environment should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
-**Example `environments/prod/main.tf`:**
+   **Example `environments/prod/main.tf`:**
    ```
    module "webserver" {
    source = "../modules/module1"
@@ -150,21 +149,21 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    bucket_name = var.prod_bucket_name
    }
    ```
-**Example `environments/prod/variables.tf`:**
+   **Example `environments/prod/variables.tf`:**
    ```
    variable "prod_bucket_name" {
    description = "Name of the production S3 bucket"
    type        = string
    }
    ```
-**Example `environments/prod/outputs.tf`:**
+   **Example `environments/prod/outputs.tf`:**
    ```
    output "prod_bucket_arn" {
    description = "ARN of the production S3 bucket"
    value       = module.webserver.bucket_arn
    }
    ```
-**Example `environments/staging/main.tf`:**
+   **Example `environments/staging/main.tf`:**
    ```
    module "webserver" {
    source = "../modules/module1"
@@ -172,14 +171,14 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
    bucket_name = var.staging_bucket_name
    }
    ```
-**Example `environments/staging/variables.tf`:**
+   **Example `environments/staging/variables.tf`:**
    ```
    variable "staging_bucket_name" {
    description = "Name of the staging S3 bucket"
    type        = string
    }
    ```
-**Example `environments/staging/outputs.tf`:**
+   **Example `environments/staging/outputs.tf`:**
    ```
    output "staging_bucket_arn" {
    description = "ARN of the staging S3 bucket"
@@ -190,32 +189,31 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
 
 ## Step 3: Provision Infrastructure with Terraform
 1. Run the following command in your project directory to initialize Terraform and download the necessary provider plugins:
-```
-terraform init
-```
+   ```
+   terraform init
+   ```
 2. Validate the Terraform configuration by running:
-```
-terraform validate
-```
+   ```
+   terraform validate
+   ```
 3. Preview the infrastructure changes that Terraform will make by running:
-```
-terraform plan
-```
+   ```
+   terraform plan
+   ```
 4. To plan and apply module-specific changes, navigate to the module directory and run the Terraform commands with the -target flag. For example:
-
-```
-terraform plan -target=module.module1
-terraform apply -target=module.module1
-```
+   ```
+   terraform plan -target=module.module1
+   terraform apply -target=module.module1
+   ```
 5. To plan and apply environment-specific changes, navigate to the environment directory and run the Terraform commands. For example:
-```
-terraform plan
-terraform apply
-```
+   ```
+   terraform plan
+   terraform apply
+   ```
 6. If the plan looks as expected, apply the infrastructure changes by running:
-```
-terraform apply
-```
+   ```
+   terraform apply
+   ```
 7. You may be prompted to confirm the changes before proceeding.
 
 8. Terraform will provision the defined infrastructure resources based on the configuration.
