@@ -63,14 +63,128 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
 ```
 3. In the `main.tf` file, define the main Terraform configuration. This file can include provider configuration, resource definitions, and data sources.
 
+**Example `main.tf`:**
+
+```
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "3.48.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.region
+}
+
+resource "aws_instance" "example" {
+  ami           = var.ami
+  instance_type = var.instance_type
+  tags = {
+    Name = "Example Instance"
+  }
+}
+```
 4. In the `variables.tf` file, define input variables that allow customization of your Terraform configuration.
+**Example `variables.tf`:**
+```
+variable "region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-west-2"
+}
+
+variable "ami" {
+  description = "AMI ID"
+  type        = string
+  default     = "ami-0c94855ba95c71c99"
+}
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t2.micro"
+}
+```
 
 5. In the `outputs.tf` file, define output values that provide information about the created resources.
+**Example `outputs.tf`:**
+```
+output "instance_id" {
+  description = "ID of the created EC2 instance"
+  value       = aws_instance.example.id
+}
+```
 
 6. Inside the modules directory, create separate directories for each module you want to define. Each module should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
-
+**Example `modules/aws/main.tf`:**
+```
+resource "aws_s3_bucket" "example" {
+  bucket = var.bucket_name
+  acl    = "private"
+}
+```
+**Example `modules/aws/variables.tf`:**
+```
+variable "bucket_name" {
+  description = "Name of the S3 bucket"
+  type        = string
+}
+```
+**Example `modules/aws/outputs.tf`:**
+```
+output "bucket_arn" {
+  description = "ARN of the created S3 bucket"
+  value       = aws_s3_bucket.example.arn
+}
+```
 7. Inside the environments directory, create separate directories for each environment, such as prod and staging. Each environment should have its own `main.tf`, `variables.tf`, and `outputs.tf` files.
+**Example `environments/prod/main.tf`:**
+```
+module "webserver" {
+  source = "../modules/module1"
 
+  bucket_name = var.prod_bucket_name
+}
+```
+**Example `environments/prod/variables.tf`:**
+```
+variable "prod_bucket_name" {
+  description = "Name of the production S3 bucket"
+  type        = string
+}
+```
+**Example `environments/prod/outputs.tf`:**
+```
+output "prod_bucket_arn" {
+  description = "ARN of the production S3 bucket"
+  value       = module.webserver.bucket_arn
+}
+```
+**Example `environments/staging/main.tf`:**
+```
+module "webserver" {
+  source = "../modules/module1"
+
+  bucket_name = var.staging_bucket_name
+}
+```
+**Example `environments/staging/variables.tf`:**
+```
+variable "staging_bucket_name" {
+  description = "Name of the staging S3 bucket"
+  type        = string
+}
+```
+**Example `environments/staging/outputs.tf`:**
+```
+output "staging_bucket_arn" {
+  description = "ARN of the staging S3 bucket"
+  value       = module.webserver.bucket_arn
+}
+```
 8. Use module blocks in your `main.tf` and environment-specific configuration files to reference and configure modules.
 
 ## Step 3: Provision Infrastructure with Terraform
