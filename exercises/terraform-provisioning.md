@@ -12,10 +12,10 @@ In this exercise, you will learn how to use Terraform to provision infrastructur
 
 ## Prerequisites
 
-- Terraform installed on your Ubuntu machine
-- Basic knowledge of infrastructure concepts and cloud providers (e.g., AWS, Azure, GCP)
-- AWS account (https://aws.amazon.com/)
-- Vultr account (https://www.vultr.com/)
+- Terraform installed on your Ubuntu machine (refer to Step 1 for installation instructions).
+- Basic knowledge of infrastructure concepts and cloud providers (e.g., AWS, Azure, GCP).
+- AWS account (https://aws.amazon.com/) to provision resources on AWS.
+- Vultr account (https://www.vultr.com/) to provision resources on Vultr.
 
 ## Step 1: Install Terraform
 
