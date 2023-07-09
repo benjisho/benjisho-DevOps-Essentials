@@ -97,7 +97,6 @@ ansible --version
 - The `inventory` directory contains inventory files that define your hosts and host groups.
 - The `group_vars` directory stores variable files specific to groups.
 - The `host_vars` directory stores variable files specific to individual hosts.
-- The `roles` directory contains your Ansible roles. Each role should have its own directory within the `roles` directory.
 - The `templates` directory stores the template files used by the role.
 - The `vars` directory contains variable files (main.yml) that define role-specific variables.
 - The `meta` directory stores metadata about the role, such as dependencies.
