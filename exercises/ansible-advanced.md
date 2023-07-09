@@ -162,12 +162,22 @@ The group_vars/all.yml file contains variable files specific to all hosts in a p
 webserver_domain: example.com
 webserver_ssl_certificate: /etc/ssl/certs/example.com.crt
 webserver_ssl_key: /etc/ssl/private/example.com.key
+
+webserver_ssh_username: my_server_username
+webserver_ssh_password: my_server_ssh_password
 ```
 ### host_vars/server1.yml
 The host_vars/server1.yml file contains variable files specific to a particular host. In a production environment, it might look like this:
 ```
 ---
 webserver_ip: 192.168.1.100
+# Alternatively to the groupvars you may write it this way:
+# webserver_ip: 
+#   - hostname: 192.168.1.100
+#     ansible_connection: ssh
+#     ansible_ssh_user: my_server_username
+#     ansible_ssh_pass: my_server_ssh_password
+
 ```
 ### handlers/main.yml
 The handlers/main.yml file contains handler tasks that define actions triggered by events. In a production environment, it might look like this:
