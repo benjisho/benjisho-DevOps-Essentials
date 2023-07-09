@@ -17,38 +17,42 @@ In this exercise, you will learn how to set up a CI pipeline using Jenkins. By t
 
 ## Step 1: Install Jenkins on your Ubuntu machine
 
+> Note: This installation guide is based on the official Jenkins documentation for Debian/Ubuntu. For more detailed information and alternative installation methods, refer to the [Jenkins documentation](https://www.jenkins.io/doc/book/installing/linux/#debianubuntu).
+
 1. Open a terminal.
 
-2. Run the following commands to install Java, which is a prerequisite for Jenkins:
-   ```
-   bash
-   sudo apt update
-   sudo apt install default-jdk
-   ```
-3. Add the Jenkins repository key to your system:
-   ```
-   wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-   ```
-4. Add the Jenkins repository to your system:
-   ```
-   sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-   ```
-5. Update your package list:
-   ```
-   sudo apt update
-   ```
-6. Install Jenkins:
-   ```
-   sudo apt install jenkins
-   ```
-7. Start Jenkins as a service:
-   ```
-   sudo systemctl start jenkins
-   ```
-8. Enable Jenkins to start on boot:
-   ```
-   sudo systemctl enable jenkins
-   ```
+2. Update the package lists and install OpenJDK 17 (Java Runtime Environment):
+```
+sudo apt update
+sudo apt install openjdk-17-jre
+```
+3. Verify the Java installation by running the following command:
+```
+java -version
+```
+4. Import the Jenkins repository key:
+```
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo gpg --dearmor --yes -o /usr/share/keyrings/jenkins-keyring.gpg
+```
+5. Add the Jenkins repository to your system:
+```
+echo 'deb [signed-by=/usr/share/keyrings/jenkins-keyring.gpg] https://pkg.jenkins.io/debian-stable binary/' | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+```
+6. Update your package list:
+```
+sudo apt update
+```
+7. Install Jenkins:
+```
+sudo apt install jenkins
+```
+8. Jenkins will be installed as a systemd service, and it will start automatically. You can check the status using the following command:
+```
+sudo systemctl status jenkins
+```
+9. By default, Jenkins listens on port 8080. Access the Jenkins web interface using your browser by visiting `http://<your-server-IP-or-domain>:8080`.
+
+10. Follow the instructions displayed in the web interface to complete the initial Jenkins setup.
 ## Step 2: Access Jenkins and set up the initial configuration
  1. Open a web browser and navigate to http://localhost:8080 (assuming you're accessing it on your local machine).
  2. Retrieve the Jenkins initial admin password:
