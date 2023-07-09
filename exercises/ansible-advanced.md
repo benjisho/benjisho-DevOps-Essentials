@@ -55,9 +55,7 @@ ansible --version
 1. Roles provide a way to organize and structure your Ansible code by grouping related tasks, variables, and templates into reusable units. They promote code reusability and modularity in your Ansible projects.
 
 2. Ansible roles follow a specific directory structure. Here's an example directory structure for an Ansible role named `webserver`:
-
    ```
-   
    webserver/
    ├── ansible.cfg
    ├── tasks/
