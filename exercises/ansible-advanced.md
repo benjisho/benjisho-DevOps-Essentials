@@ -13,8 +13,11 @@ In this exercise, you will dive deeper into Ansible by exploring advanced topics
 
 ## Prerequisites
 
-- Ansible installed on your Ubuntu machine
 - Basic knowledge of Ansible concepts and playbook development
+- Basic knowledge of Ubuntu command-line interface (CLI) and package management (apt).
+- Ansible installed on your Ubuntu machine
+- Internet access on the Ubuntu machine for downloading the updates, packeges and roles from Ansible Galaxy.
+- A target environment and access to it (virtual machines or containers, or remote servers) where you can test your Ansible playbooks and roles.
 
 ## Step 1: Installing Ansible on Ubuntu
 To install Ansible on Ubuntu, you can use the following steps:
