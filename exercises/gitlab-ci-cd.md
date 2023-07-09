@@ -7,8 +7,11 @@ In this exercise, you will learn how to implement Continuous Delivery (CD) using
 - [Step 1: Install GitLab on your Vultr environment](#step-1-setupinstall-gitlab-on-your-vultr-environment)
 - [Step 2: Create a sample project and configure CI/CD pipeline](#step-2-create-a-sample-project-and-configure-cicd-pipeline)
 - [Step 3: Configuring the CI/CD pipeline](#step-3-configuring-the-cicd-pipeline)
+  - [Step 3 Details](#step-3-details)
 - [Step 4: Monitoring the CI/CD pipeline](#step-4-monitoring-the-cicd-pipeline)
 - [Step 5: Verifying the CI/CD pipeline](#step-5-verifying-the-cicd-pipeline)
+- [Bonus Step: Advanced Configuration of CI/CD pipeline](#bonus-step-advanced-configuration-of-cicd-pipeline)
+  - [Bonus Step Details](#bonus-step-details)
 
 ## Prerequisites
 
@@ -60,11 +63,23 @@ Before starting this exercise, ensure that you have the following:
             - echo "Deploying the application..."
         ```
 
-   - In this example, we have three stages defined: build, test, and deploy. Each stage contains a single job with its own script. The script defines the commands or scripts that are executed as part of that job.
-   - Feel free to customize the stages and jobs according to your project's requirements. You can add more stages, define dependencies between jobs, and include more complex commands or scripts.
+   - In this example, we have three stages defined:
+     - build
+     - test
+     - deploy
+   - Each stage contains a single job with its own script.
+   - The script defines the commands or scripts that are executed as part of that job.
+   - Feel free to customize the stages and jobs according to your project's requirements.
+     - You can add more stages, define dependencies between jobs, and include more complex commands or scripts.
 
 3. Once you have defined the .gitlab-ci.yml file, commit and push it to your GitLab repository.
 4. This action will trigger the pipeline execution based on the configuration defined in the file.
+
+### Step 3 Details
+- The `.gitlab-ci.yml` file is used to define the stages and jobs for your CI/CD pipeline.
+- The `build_job` is defined in the build stage and runs the script to build the application.
+- The `test_job` is defined in the test stage and runs the script to execute tests.
+- The `deploy_job` is defined in the deploy stage and runs the script to deploy the application.
 
 ## Step 4: Monitoring the CI/CD pipeline
 1. After pushing the .gitlab-ci.yml file, you can monitor the pipeline execution in the GitLab web interface. Go to your project's page and navigate to the "CI/CD" section. Here, you will see the pipeline status, including the stages and jobs that are currently running or have completed.
@@ -76,61 +91,102 @@ Before starting this exercise, ensure that you have the following:
 
 2. If any job fails or encounters errors, investigate the logs and error messages to identify the cause and make necessary adjustments to your pipeline configuration or application code.
 
-## Bonus: Advanced Configuration of CI/CD pipeline
+---
+
+## Bonus Step: Advanced Configuration of CI/CD pipeline
 1. To configure your CI/CD pipeline, you need to define stages and jobs using the .gitlab-ci.yml file.
 2. This file should be located in the root directory of your GitLab project.
 3. Create a Dockerfile in the root directory of your project with the following content:
+    ```
+    FROM ubuntu:latest
 
-   ```
-   FROM ubuntu:latest
+    # Set environment variables
+    ENV DEBIAN_FRONTEND noninteractive
 
-   # Set environment variables
-   ENV DEBIAN_FRONTEND noninteractive
+    # Update the package lists
+    RUN apt-get update -y
 
-   # Update the package lists
-   RUN apt-get update -y
+    # Install necessary packages
+    RUN apt-get install -y \
+        build-essential \
+        curl \
+        git \
+        vim
 
-   # Install necessary packages
-   RUN apt-get install -y \
-       build-essential \
-       curl \
-       git \
-       vim
+    # Set the working directory
+    WORKDIR /app
 
-   # Set the working directory
-   WORKDIR /app
+    # Copy the necessary files to the working directory
+    COPY . /app
 
-   # Copy the necessary files to the working directory
-   COPY . /app
-
-   # Set the entry point or default command
-   CMD ["/bin/bash"]
-   ```
+    # Set the entry point or default command
+    CMD ["/bin/bash"]
+    ```
 4. In your .gitlab-ci.yml file, add the following stages and jobs:
-   ```
-       stages:
+    ```
+    stages:
     - build
     - test
     - deploy
 
     build_job:
     stage: build
+    image: docker:latest
+    services:
+        - docker:dind
     script:
         - docker build -t my-ubuntu-image .
+        - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        - docker push $DOCKER_USERNAME/my-ubuntu-image
 
     test_job:
-    stage: test
-    script:
-        - echo "Running tests..."
+      stage: test
+      script:
+        - echo "Running integration tests..."
+        - docker run --rm my-ubuntu-image pytest
+        - echo "Checking installed packages..."
+        - docker run --rm my-ubuntu-image bash -c "dpkg -s build-essential curl git vim"
 
     deploy_job:
-    stage: deploy
-    script:
+      stage: deploy
+      script:
         - echo "Deploying the application..."
-   ```
-5. In this example, we have added a build stage with a job that builds the Docker image using the Dockerfile we created.
-6. Once you have defined the .gitlab-ci.yml file and the Dockerfile, commit and push them to your GitLab repository.
-7. This action will trigger the pipeline execution based on the configuration defined in the file.
+        - docker run -d --name my-ubuntu-app my-ubuntu-image
+        - echo "Application deployed successfully!"
+    rules:
+      - if: $CI_JOB_NAME == "test_job"
+        when: on_success
+      - if: $CI_JOB_NAME == "deploy_job"
+        when: on_success
+        allow_failure: true
+    ```
+     > **Note: Make sure to set the `$DOCKER_USERNAME` and `$DOCKER_PASSWORD` environment variables in your GitLab CI/CD settings or CI/CD variables to authenticate and push the Docker image to your Docker Hub repository.**
+
+5. This is a bit more advanced configuration.
+   - It demonstrates how to:
+     - build a Docker image
+     - authenticate with Docker Hub
+     - and push the image to a repository as part of the CI/CD pipeline.
+7. In this example, we have added a build stage with a job that builds the Docker image using the Dockerfile we created. The image is tagged as `my-ubuntu-image`.
+8. The `test_job` stage is included for running integration tests and checking the installed packages in the Docker image.
+9. Finally, the `deploy_job` stage is included for deploying the application and run the container in the background.
+10. Once you have defined the .gitlab-ci.yml file and the Dockerfile, commit and push them to your GitLab repository.
+11. This action will trigger the pipeline execution based on the configuration defined in the file.
+
+### Bonus Step Details
+In this advanced configuration:
+ - The `build_job` stage uses the `docker:latest` image and includes the `docker:dind` service, which allows running Docker commands inside the CI/CD environment.
+ - The `script` section for the `build_job` includes additional steps to log in to Docker Hub (`docker login`) using the provided `$DOCKER_USERNAME` and `$DOCKER_PASSWORD` environment variables, and push the built image to the Docker Hub repository with the appropriate tag.
+ - The `test_job` stage runs integration tests by executing `pytest` inside the `my-ubuntu-image` container.
+   - It also checks the installed packages by running the `dpkg -s` command for `build-essential`, `curl`, `git`, and `vim` inside the container.
+ - The `deploy_job` stage deploys the application by running the `docker run` command to start a container named `my-ubuntu-app` using the `my-ubuntu-image`.
+ - The `rules` section specifies the execution rules for the jobs.
+   - The `test_job` and `deploy_job` will only be executed on success of previous stages.
+   - The `deploy_job` allows failure, meaning if it encounters an error, it will not fail the overall pipeline.
+
+Congratulations! You now have an advanced CI/CD pipeline configuration that builds a Docker image, runs tests, and prepares for deployment.
+
+---
 
 Congratulations! You have successfully created and configured a basic CI/CD pipeline using GitLab CI/CD.
 
