@@ -32,35 +32,39 @@ Before starting this exercise, ensure that you have the following:
 
 3. In the project settings, navigate to the "Set Up CI/CD" section. This section allows you to configure and manage the CI/CD pipeline for your project.
 
-## Step 3: Configuring the CI/CD pipeline
-1. To configure your CI/CD pipeline, you need to define stages and jobs using the .gitlab-ci.yml file. This file should be located in the root directory of your GitLab project.
+## Step 3: Basic Configuration of CI/CD pipeline
+1. To configure your CI/CD pipeline, you need to define stages and jobs using the .gitlab-ci.yml file.
+   - This file should be located in the root directory of your GitLab project.
 
-2. The .gitlab-ci.yml file follows a YAML syntax and allows you to define the stages of your pipeline and the jobs that run within each stage. Here's an example of a basic .gitlab-ci.yml file:
-   ```
-   stages:
-     - build
-     - test
-     - deploy
+2. The .gitlab-ci.yml file follows a YAML syntax and allows you to define the stages of your pipeline and the jobs that run within each stage.
+   - Here's an example of a basic .gitlab-ci.yml file:
+    ```
+    stages:
+        - build
+        - test
+        - deploy
 
-   build_job:
-     stage: build
-     script:
-       - echo "Building the application..."
+    build_job:
+        stage: build
+        script:
+        - echo "Building the application..."
 
-   test_job:
-     stage: test
-     script:
-       - echo "Running tests..."
+    test_job:
+        stage: test
+        script:
+        - echo "Running tests..."
 
-   deploy_job:
-     stage: deploy
-     script:
-       - echo "Deploying the application..."
-   ```
+    deploy_job:
+        stage: deploy
+        script:
+        - echo "Deploying the application..."
+    ```
+
    - In this example, we have three stages defined: build, test, and deploy. Each stage contains a single job with its own script. The script defines the commands or scripts that are executed as part of that job.
    - Feel free to customize the stages and jobs according to your project's requirements. You can add more stages, define dependencies between jobs, and include more complex commands or scripts.
 
-3. Once you have defined the .gitlab-ci.yml file, commit and push it to your GitLab repository. This action will trigger the pipeline execution based on the configuration defined in the file.
+3. Once you have defined the .gitlab-ci.yml file, commit and push it to your GitLab repository.
+4. This action will trigger the pipeline execution based on the configuration defined in the file.
 
 ## Step 4: Monitoring the CI/CD pipeline
 1. After pushing the .gitlab-ci.yml file, you can monitor the pipeline execution in the GitLab web interface. Go to your project's page and navigate to the "CI/CD" section. Here, you will see the pipeline status, including the stages and jobs that are currently running or have completed.
@@ -71,6 +75,62 @@ Before starting this exercise, ensure that you have the following:
 1. To verify that the CI/CD pipeline is working as expected, check the logs and status of each job. The build job should successfully build your application, the test job should run your tests and report the results, and the deploy job should deploy your application to the target environment.
 
 2. If any job fails or encounters errors, investigate the logs and error messages to identify the cause and make necessary adjustments to your pipeline configuration or application code.
+
+## Bonus: Advanced Configuration of CI/CD pipeline
+1. To configure your CI/CD pipeline, you need to define stages and jobs using the .gitlab-ci.yml file.
+2. This file should be located in the root directory of your GitLab project.
+3. Create a Dockerfile in the root directory of your project with the following content:
+
+   ```
+   FROM ubuntu:latest
+
+   # Set environment variables
+   ENV DEBIAN_FRONTEND noninteractive
+
+   # Update the package lists
+   RUN apt-get update -y
+
+   # Install necessary packages
+   RUN apt-get install -y \
+       build-essential \
+       curl \
+       git \
+       vim
+
+   # Set the working directory
+   WORKDIR /app
+
+   # Copy the necessary files to the working directory
+   COPY . /app
+
+   # Set the entry point or default command
+   CMD ["/bin/bash"]
+   ```
+4. In your .gitlab-ci.yml file, add the following stages and jobs:
+   ```
+       stages:
+    - build
+    - test
+    - deploy
+
+    build_job:
+    stage: build
+    script:
+        - docker build -t my-ubuntu-image .
+
+    test_job:
+    stage: test
+    script:
+        - echo "Running tests..."
+
+    deploy_job:
+    stage: deploy
+    script:
+        - echo "Deploying the application..."
+   ```
+5. In this example, we have added a build stage with a job that builds the Docker image using the Dockerfile we created.
+6. Once you have defined the .gitlab-ci.yml file and the Dockerfile, commit and push them to your GitLab repository.
+7. This action will trigger the pipeline execution based on the configuration defined in the file.
 
 Congratulations! You have successfully created and configured a basic CI/CD pipeline using GitLab CI/CD.
 
