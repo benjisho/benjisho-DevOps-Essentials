@@ -13,8 +13,9 @@ In this exercise, you will learn how to implement monitoring using Prometheus. P
 
 ## Prerequisites
 
-- Ubuntu machine
-- Basic understanding of monitoring concepts
+- An Ubuntu machine to install and run Prometheus.
+- Basic understanding of monitoring concepts such as metrics, time-series data, and alerting.
+   - This will help you to better understand, configure and use Prometheus for monitoring your applications and infrastructure.
 
 ## Step 1: Install Prometheus
 
