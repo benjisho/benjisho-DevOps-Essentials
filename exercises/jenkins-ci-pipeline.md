@@ -13,7 +13,10 @@ In this exercise, you will learn how to set up a CI pipeline using Jenkins. By t
 ## Prerequisites
 
 - Ubuntu machine with Java installed (see Step 1)
-- Access to the Jenkins web interface
+- Internet connectivity on the machine that is going to download and install Jenkins and its dependencies.
+- Basic knowledge of Ubuntu command-line interface (CLI) and package management (apt).
+- Access to the Jenkins web interface (port http 8080)
+- A sample project repository hosted on GitHub (or other version control platform) to configure the CI pipeline.
 
 ## Step 1: Install Jenkins on your Ubuntu machine
 
