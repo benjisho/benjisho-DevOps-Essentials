@@ -38,27 +38,27 @@ Before starting this exercise, ensure that you have the following:
 
 2. The .gitlab-ci.yml file follows a YAML syntax and allows you to define the stages of your pipeline and the jobs that run within each stage.
    - Here's an example of a basic .gitlab-ci.yml file:
-    ```
-    stages:
-        - build
-        - test
-        - deploy
+        ```
+        stages:
+            - build
+            - test
+            - deploy
 
-    build_job:
-        stage: build
-        script:
-        - echo "Building the application..."
+        build_job:
+            stage: build
+            script:
+            - echo "Building the application..."
 
-    test_job:
-        stage: test
-        script:
-        - echo "Running tests..."
+        test_job:
+            stage: test
+            script:
+            - echo "Running tests..."
 
-    deploy_job:
-        stage: deploy
-        script:
-        - echo "Deploying the application..."
-    ```
+        deploy_job:
+            stage: deploy
+            script:
+            - echo "Deploying the application..."
+        ```
 
    - In this example, we have three stages defined: build, test, and deploy. Each stage contains a single job with its own script. The script defines the commands or scripts that are executed as part of that job.
    - Feel free to customize the stages and jobs according to your project's requirements. You can add more stages, define dependencies between jobs, and include more complex commands or scripts.
