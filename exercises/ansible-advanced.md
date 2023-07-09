@@ -62,6 +62,10 @@ ansible --version
     │   └── main.yml
     ├── templates/
     │   └── index.html.j2
+    ├── inventory/
+    │   ├── ALL
+    │   └── webservers
+    │   └── database_servers
     ├── vars/
     │   └── main.yml
     ├── meta/
@@ -85,6 +89,7 @@ ansible --version
     ├── requirements.yml
     └── README.md
    ```
+
 - The tasks directory contains the main tasks file (main.yml) that defines the actions to be performed.
 - The templates directory stores the template files used by the role.
 - The vars directory contains variable files (main.yml) that define role-specific variables.
@@ -139,7 +144,39 @@ The templates/index.html.j2 file contains the Jinja2 template for the web server
 </body>
 </html>
 ```
+### inventory files
+inventory/ALL
+```
+[all:children]
+webservers
+database_servers
+```
+inventory/webservers
+```
+[webservers_group]
+webserver1 ansible_host=192.168.1.100
 
+# Alternatively, you can define additional hosts like this:
+# webserver2 ansible_host=192.168.1.101
+# webserver3 ansible_host=192.168.1.102
+# Alternatively to the groupvars you may write it this way:
+# webserver1 ansible_host=192.168.1.100 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# webserver2 ansible_host=192.168.1.101 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# webserver3 ansible_host=192.168.1.102 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+```
+inventory/database_servers:
+```
+[database_servers_group]
+dbserver1 ansible_host=192.168.1.200
+
+# Alternatively, you can define additional hosts like this:
+# dbserver2 ansible_host=192.168.1.201
+# dbserver3 ansible_host=192.168.1.202
+# Alternatively to the groupvars you may write it this way:
+# dbserver1 ansible_host=192.168.1.200 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# dbserver2 ansible_host=192.168.1.201 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# dbserver3 ansible_host=192.168.1.202 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+```
 ### vars/main.yml
 The vars/main.yml file contains role-specific variables. In a production environment, it might look like this:
 ```
