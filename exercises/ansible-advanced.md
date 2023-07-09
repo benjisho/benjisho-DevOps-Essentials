@@ -57,7 +57,9 @@ ansible --version
 2. Ansible roles follow a specific directory structure. Here's an example directory structure for an Ansible role named `webserver`:
 
    ```
+   
    webserver/
+   ├── ansible.cfg
    ├── tasks/
    │   └── main.yml
    ├── inventory/
@@ -92,22 +94,33 @@ ansible --version
    └── README.md
    ```
 
+- The `ansible.cfg` file specifies the configuration for your Ansible project. Place it in the root directory of your project.
 - The tasks directory contains the main tasks file (main.yml) that defines the actions to be performed.
-- The templates directory stores the template files used by the role.
-- The vars directory contains variable files (main.yml) that define role-specific variables.
-- The meta directory stores metadata about the role, such as dependencies.
-- The group_vars and host_vars directories store variable files specific to groups or hosts.
-- The handlers directory contains handler files that define actions triggered by events.
-- The files directory stores static files that need to be copied to remote hosts.
-- The defaults directory contains default variable files that provide default values.
-- The library directory contains custom modules.
-- The lookup_plugins directory stores custom lookup plugins.
-- The filter_plugins directory stores custom filter plugins.
-- The requirements.yml file specifies any external role dependencies.
-- The README.md file provides documentation about the role.
+- The `inventory` directory contains inventory files that define your hosts and host groups.
+- The `group_vars` directory stores variable files specific to groups.
+- The `host_vars` directory stores variable files specific to individual hosts.
+- The `roles` directory contains your Ansible roles. Each role should have its own directory within the `roles` directory.
+- The `templates` directory stores the template files used by the role.
+- The `vars` directory contains variable files (main.yml) that define role-specific variables.
+- The `meta` directory stores metadata about the role, such as dependencies.
+- The `group_vars` and host_vars directories store variable files specific to groups or hosts.
+- The `handlers` directory contains handler files that define actions triggered by events.
+- The `files` directory stores static files that need to be copied to remote hosts.
+- The `defaults` directory contains default variable files that provide default values.
+- The `library` directory contains custom modules.
+- The `lookup_plugins` directory stores custom lookup plugins.
+- The `filter_plugins` directory stores custom filter plugins.
+- The `requirements.yml` file specifies any external role dependencies.
+- The `README.md` file provides documentation about the role.
 
 3. Each file in the directory structure serves a specific purpose. Here's an example code snippet for each file:
-
+### ansible.cfg
+This file specifies the configuration for your Ansible project. It is placed in the root directory of your project. In the given example, it contains the following configuration:
+```
+[defaults]
+inventory = inventory/
+roles_path = roles/
+```
 ### tasks/main.yml:
 The tasks/main.yml file contains the main tasks to be performed by the role. In a production environment, it might look like this:
 
