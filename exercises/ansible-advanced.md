@@ -60,22 +60,22 @@ ansible --version
    webserver/
    ├── tasks/
    │   └── main.yml
-   ├── templates/
-   │   └── index.html.j2
    ├── inventory/
    │   ├── ALL
    │   ├── webservers
    │   └── database_servers
-   ├── vars/
-   │   └── main.yml
-   ├── meta/
-   │   └── main.yml
    ├── group_vars/
    │   └── all.yml
    ├── host_vars/
    │   ├── webserver1.yml
    │   ├── webserver2.yml
    │   └── webserver3.yml
+   ├── templates/
+   │   └── index.html.j2
+   ├── vars/
+   │   └── main.yml
+   ├── meta/
+   │   └── main.yml
    ├── handlers/
    │   └── main.yml
    ├── files/
@@ -133,19 +133,6 @@ The tasks/main.yml file contains the main tasks to be performed by the role. In 
     group: root
   notify: Reload Configuration
 ```
-### templates/index.html.j2:
-The templates/index.html.j2 file contains the Jinja2 template for the web server's index page. In a production environment, it might look like this:
-```
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome to my website</title>
-</head>
-<body>
-    <h1>Welcome!</h1>
-</body>
-</html>
-```
 ### inventory files
 inventory/ALL
 ```
@@ -178,21 +165,6 @@ dbserver1 ansible_host=192.168.1.201
 # dbserver1 ansible_host=192.168.1.201 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
 # dbserver2 ansible_host=192.168.1.202 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
 # dbserver3 ansible_host=192.168.1.203 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
-```
-### vars/main.yml
-The vars/main.yml file contains role-specific variables. In a production environment, it might look like this:
-```
----
-webserver_port: 80
-webserver_document_root: "/var/www/html"
-```
-### meta/main.yml
-The meta/main.yml file contains metadata about the role, such as dependencies. In a production environment, it might look like this:
-```
----
-dependencies:
-  - role: common
-  - role: database
 ```
 ### group_vars/all.yml
 The group_vars/all.yml file contains variable files specific to all hosts in a particular group. In a production environment, it might look like this:
@@ -241,6 +213,34 @@ ansible_connection: ssh
 ansible_ssh_user: my_webserver2_username
 ansible_ssh_pass: my_webserver3_ssh_password
 webserver_port: 8080
+```
+### templates/index.html.j2:
+The templates/index.html.j2 file contains the Jinja2 template for the web server's index page. In a production environment, it might look like this:
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to my website</title>
+</head>
+<body>
+    <h1>Welcome!</h1>
+</body>
+</html>
+```
+### vars/main.yml
+The vars/main.yml file contains role-specific variables. In a production environment, it might look like this:
+```
+---
+webserver_port: 80
+webserver_document_root: "/var/www/html"
+```
+### meta/main.yml
+The meta/main.yml file contains metadata about the role, such as dependencies. In a production environment, it might look like this:
+```
+---
+dependencies:
+  - role: common
+  - role: database
 ```
 ### handlers/main.yml
 The handlers/main.yml file contains handler tasks that define actions triggered by events. In a production environment, it might look like this:
