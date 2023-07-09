@@ -15,7 +15,7 @@ In this exercise, you will dive deeper into Ansible by exploring advanced topics
 
 - Basic knowledge of Ansible concepts and playbook development
 - Basic knowledge of Ubuntu command-line interface (CLI) and package management (apt).
-- Ansible installed on your Ubuntu machine
+- Ansible installed on your Ubuntu machine (refer to Step 1 for installation instructions).
 - Internet access on the Ubuntu machine for downloading the updates, packeges and roles from Ansible Galaxy.
 - A target environment and access to it (virtual machines or containers, or remote servers) where you can test your Ansible playbooks and roles.
 
