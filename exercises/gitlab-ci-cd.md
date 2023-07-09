@@ -10,8 +10,8 @@ In this exercise, you will learn how to implement Continuous Delivery (CD) using
   - [Step 3 Details](#step-3-details)
 - [Step 4: Monitoring the CI/CD pipeline](#step-4-monitoring-the-cicd-pipeline)
 - [Step 5: Verifying the CI/CD pipeline](#step-5-verifying-the-cicd-pipeline)
-- [Bonus Step: Advanced Configuration of CI/CD pipeline](#bonus-step-advanced-configuration-of-cicd-pipeline)
-  - [Bonus Step Details](#bonus-step-details)
+- [_Bonus Step: Advanced Configuration of CI/CD pipeline_](#bonus-step-advanced-configuration-of-cicd-pipeline)
+  - [_Bonus Step Details_](#bonus-step-details)
 
 ## Prerequisites
 
