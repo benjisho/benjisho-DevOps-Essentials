@@ -198,7 +198,7 @@ myapp_version: "1.0"
 myapp_timeout: 30
 ```
 ### library/mymodule.py
-The library/mymodule.py filecontains custom Ansible modules written in Python. In a production environment, it might look like this:
+The library/mymodule.py filecontains custom Ansible modules written in **Python**. In a production environment, it might look like this:
 ```
 import os
 
@@ -225,7 +225,7 @@ if __name__ == '__main__':
     main()
 ```
 ### lookup_plugins/mylookup.py
-The lookup_plugins/mylookup.py file contains custom lookup plugins written in Python. In a production environment, it might look like this:
+The lookup_plugins/mylookup.py file contains custom lookup plugins written in **Python**. In a production environment, it might look like this:
 ```
 from ansible.errors import AnsibleError, AnsibleParserError
 from ansible.plugins.lookup import LookupBase
@@ -241,7 +241,7 @@ class MyLookup(LookupBase):
         return results
 ```
 ### filter_plugins/myfilter.py
-The filter_plugins/myfilter.py file contains custom filter plugins written in Python. In a production environment, it might look like this:
+The filter_plugins/myfilter.py file contains custom filter plugins written in **Python**. In a production environment, it might look like this:
 ```
 def myfilter(value):
     # Custom filter logic
