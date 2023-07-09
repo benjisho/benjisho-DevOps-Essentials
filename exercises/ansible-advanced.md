@@ -204,8 +204,8 @@ webserver_port: 8080
 # webserver_ip: 
 #   - hostname: 192.168.1.101
 #     ansible_connection: ssh
-#     ansible_ssh_user: my_server_username
-#     ansible_ssh_pass: my_server_ssh_password
+#     ansible_ssh_user: my_server1_username
+#     ansible_ssh_pass: my_server1_ssh_password
 ```
 ### host_vars/webserver2.yml
 ```
@@ -213,7 +213,7 @@ webserver_port: 8080
 webserver_ip: 192.168.1.102
 ansible_connection: ssh
 ansible_ssh_user: my_webserver2_username
-ansible_ssh_pass: my_webserver3_ssh_password
+ansible_ssh_pass: my_webserver2_ssh_password
 webserver_port: 8080
 ```
 ### host_vars/webserver3.yml
@@ -221,7 +221,7 @@ webserver_port: 8080
 ---
 webserver_ip: 192.168.1.103
 ansible_connection: ssh
-ansible_ssh_user: my_webserver2_username
+ansible_ssh_user: my_webserver3_username
 ansible_ssh_pass: my_webserver3_ssh_password
 webserver_port: 8080
 ```
