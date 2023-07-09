@@ -57,37 +57,39 @@ ansible --version
 2. Ansible roles follow a specific directory structure. Here's an example directory structure for an Ansible role named `webserver`:
 
    ```
-    webserver/
-    ├── tasks/
-    │   └── main.yml
-    ├── templates/
-    │   └── index.html.j2
-    ├── inventory/
-    │   ├── ALL
-    │   └── webservers
-    │   └── database_servers
-    ├── vars/
-    │   └── main.yml
-    ├── meta/
-    │   └── main.yml
-    ├── group_vars/
-    │   └── all.yml
-    ├── host_vars/
-    │   └── server1.yml
-    ├── handlers/
-    │   └── main.yml
-    ├── files/
-    │   └── myfile.conf
-    ├── defaults/
-    │   └── main.yml
-    ├── library/
-    │   └── mymodule.py
-    ├── lookup_plugins/
-    │   └── mylookup.py
-    ├── filter_plugins/
-    │   └── myfilter.py
-    ├── requirements.yml
-    └── README.md
+   webserver/
+   ├── tasks/
+   │   └── main.yml
+   ├── templates/
+   │   └── index.html.j2
+   ├── inventory/
+   │   ├── ALL
+   │   ├── webservers
+   │   └── database_servers
+   ├── vars/
+   │   └── main.yml
+   ├── meta/
+   │   └── main.yml
+   ├── group_vars/
+   │   └── all.yml
+   ├── host_vars/
+   │   ├── webserver1.yml
+   │   ├── webserver2.yml
+   │   └── webserver3.yml
+   ├── handlers/
+   │   └── main.yml
+   ├── files/
+   │   └── myfile.conf
+   ├── defaults/
+   │   └── main.yml
+   ├── library/
+   │   └── mymodule.py
+   ├── lookup_plugins/
+   │   └── mylookup.py
+   ├── filter_plugins/
+   │   └── myfilter.py
+   ├── requirements.yml
+   └── README.md
    ```
 
 - The tasks directory contains the main tasks file (main.yml) that defines the actions to be performed.
@@ -202,19 +204,28 @@ webserver_ssl_key: /etc/ssl/private/example.com.key
 
 webserver_ssh_username: my_server_username
 webserver_ssh_password: my_server_ssh_password
+
+database_server: dbserver1
 ```
-### host_vars/server1.yml
-The host_vars/server1.yml file contains variable files specific to a particular host. In a production environment, it might look like this:
+### host_vars/webserver1.yml
+The host_vars/webserver.yml file contains variable files specific to a particular host. In a production environment, it might look like this:
 ```
 ---
 webserver_ip: 192.168.1.100
+webserver_port: 8080
+
 # Alternatively to the groupvars you may write it this way:
 # webserver_ip: 
 #   - hostname: 192.168.1.100
 #     ansible_connection: ssh
 #     ansible_ssh_user: my_server_username
 #     ansible_ssh_pass: my_server_ssh_password
-
+```
+### host_vars/webserver2.yml
+```
+---
+webserver_ip: 192.168.1.101
+webserver_port: 8080
 ```
 ### handlers/main.yml
 The handlers/main.yml file contains handler tasks that define actions triggered by events. In a production environment, it might look like this:
