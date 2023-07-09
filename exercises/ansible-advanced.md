@@ -162,7 +162,6 @@ The group_vars/all.yml file contains variable files specific to all hosts in a p
 webserver_domain: example.com
 webserver_ssl_certificate: /etc/ssl/certs/example.com.crt
 webserver_ssl_key: /etc/ssl/private/example.com.key
-
 ```
 ### host_vars/server1.yml
 The host_vars/server1.yml file contains variable files specific to a particular host. In a production environment, it might look like this:
