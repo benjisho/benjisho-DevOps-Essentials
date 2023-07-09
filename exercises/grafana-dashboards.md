@@ -14,7 +14,7 @@ In this exercise, you will learn how to create dashboards using Grafana. Grafana
 - [Step 7: Share and Export Dashboards](#step-7-share-and-export-dashboards)
 
 ## Prerequisites
-- Ubuntu machine
+- An Ubuntu machine/container to install and run Grafana.
 - Prometheus and Grafana installed and configured (refer to previous exercises)
 
 ## Step 1: Install Grafana
