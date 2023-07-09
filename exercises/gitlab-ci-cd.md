@@ -4,9 +4,11 @@ In this exercise, you will learn how to implement Continuous Delivery (CD) using
 
 ## Table of Contents
 
-- [Step 1: Install GitLab on your Vultr environment](#step-1-install-gitlab-on-your-vultr-environment)
+- [Step 1: Install GitLab on your Vultr environment](#step-1-setupinstall-gitlab-on-your-vultr-environment)
 - [Step 2: Create a sample project and configure CI/CD pipeline](#step-2-create-a-sample-project-and-configure-cicd-pipeline)
-- [Step 3: Verify the CI/CD pipeline](#step-3-verify-the-cicd-pipeline)
+- [Step 3: Configuring the CI/CD pipeline](#step-3-configuring-the-cicd-pipeline)
+- [Step 4: Monitoring the CI/CD pipeline](#step-4-monitoring-the-cicd-pipeline)
+- [Step 5: Verifying the CI/CD pipeline](#step-5-verifying-the-cicd-pipeline)
 
 ## Prerequisites
 
@@ -60,14 +62,15 @@ Before starting this exercise, ensure that you have the following:
 
 3. Once you have defined the .gitlab-ci.yml file, commit and push it to your GitLab repository. This action will trigger the pipeline execution based on the configuration defined in the file.
 
-## Step 3: Monitoring the CI/CD pipeline
+## Step 4: Monitoring the CI/CD pipeline
 1. After pushing the .gitlab-ci.yml file, you can monitor the pipeline execution in the GitLab web interface. Go to your project's page and navigate to the "CI/CD" section. Here, you will see the pipeline status, including the stages and jobs that are currently running or have completed.
 
 2. Clicking on the pipeline will provide more details, such as the build logs, test results, and deployment status for each job in the pipeline.
 
-## Step 4: Verifying the CI/CD pipeline
+## Step 5: Verifying the CI/CD pipeline
 1. To verify that the CI/CD pipeline is working as expected, check the logs and status of each job. The build job should successfully build your application, the test job should run your tests and report the results, and the deploy job should deploy your application to the target environment.
 
 2. If any job fails or encounters errors, investigate the logs and error messages to identify the cause and make necessary adjustments to your pipeline configuration or application code.
 
 Congratulations! You have successfully created and configured a basic CI/CD pipeline using GitLab CI/CD.
+
