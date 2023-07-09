@@ -156,28 +156,28 @@ database_servers
 inventory/webservers
 ```
 [webservers_group]
-webserver1 ansible_host=192.168.1.100
+webserver1 ansible_host=192.168.1.101
 
 # Alternatively, you can define additional hosts like this:
-# webserver2 ansible_host=192.168.1.101
-# webserver3 ansible_host=192.168.1.102
+# webserver2 ansible_host=192.168.1.102
+# webserver3 ansible_host=192.168.1.103
 # Alternatively to the groupvars you may write it this way:
-# webserver1 ansible_host=192.168.1.100 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
-# webserver2 ansible_host=192.168.1.101 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
-# webserver3 ansible_host=192.168.1.102 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# webserver1 ansible_host=192.168.1.101 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# webserver2 ansible_host=192.168.1.102 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# webserver3 ansible_host=192.168.1.103 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
 ```
 inventory/database_servers:
 ```
 [database_servers_group]
-dbserver1 ansible_host=192.168.1.200
+dbserver1 ansible_host=192.168.1.201
 
 # Alternatively, you can define additional hosts like this:
-# dbserver2 ansible_host=192.168.1.201
-# dbserver3 ansible_host=192.168.1.202
+# dbserver2 ansible_host=192.168.1.202
+# dbserver3 ansible_host=192.168.1.203
 # Alternatively to the groupvars you may write it this way:
-# dbserver1 ansible_host=192.168.1.200 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
-# dbserver2 ansible_host=192.168.1.201 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
-# dbserver3 ansible_host=192.168.1.202 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# dbserver1 ansible_host=192.168.1.201 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# dbserver2 ansible_host=192.168.1.202 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
+# dbserver3 ansible_host=192.168.1.203 ansible_connection=ssh ansible_ssh_user=my_server_username ansible_ssh_pass=my_server_ssh_password
 ```
 ### vars/main.yml
 The vars/main.yml file contains role-specific variables. In a production environment, it might look like this:
@@ -202,8 +202,8 @@ webserver_domain: example.com
 webserver_ssl_certificate: /etc/ssl/certs/example.com.crt
 webserver_ssl_key: /etc/ssl/private/example.com.key
 
-webserver_ssh_username: my_server_username
-webserver_ssh_password: my_server_ssh_password
+# webserver_ssh_username: my_server_username
+# webserver_ssh_password: my_server_ssh_password
 
 database_server: dbserver1
 ```
@@ -211,12 +211,15 @@ database_server: dbserver1
 The host_vars/webserver.yml file contains variable files specific to a particular host. In a production environment, it might look like this:
 ```
 ---
-webserver_ip: 192.168.1.100
+webserver_ip: 192.168.1.101
+ansible_connection: ssh
+ansible_ssh_user: my_webserver1_username
+ansible_ssh_pass: my_webserver1_ssh_password
 webserver_port: 8080
 
 # Alternatively to the groupvars you may write it this way:
 # webserver_ip: 
-#   - hostname: 192.168.1.100
+#   - hostname: 192.168.1.101
 #     ansible_connection: ssh
 #     ansible_ssh_user: my_server_username
 #     ansible_ssh_pass: my_server_ssh_password
@@ -224,7 +227,19 @@ webserver_port: 8080
 ### host_vars/webserver2.yml
 ```
 ---
-webserver_ip: 192.168.1.101
+webserver_ip: 192.168.1.102
+ansible_connection: ssh
+ansible_ssh_user: my_webserver2_username
+ansible_ssh_pass: my_webserver3_ssh_password
+webserver_port: 8080
+```
+### host_vars/webserver3.yml
+```
+---
+webserver_ip: 192.168.1.103
+ansible_connection: ssh
+ansible_ssh_user: my_webserver2_username
+ansible_ssh_pass: my_webserver3_ssh_password
 webserver_port: 8080
 ```
 ### handlers/main.yml
