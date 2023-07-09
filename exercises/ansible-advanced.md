@@ -93,14 +93,13 @@ ansible --version
    ```
 
 - The `ansible.cfg` file specifies the configuration for your Ansible project. Place it in the root directory of your project.
-- The tasks directory contains the main tasks file (main.yml) that defines the actions to be performed.
+- The `tasks` directory contains the main tasks file (main.yml) that defines the actions to be performed.
 - The `inventory` directory contains inventory files that define your hosts and host groups.
 - The `group_vars` directory stores variable files specific to groups.
 - The `host_vars` directory stores variable files specific to individual hosts.
 - The `templates` directory stores the template files used by the role.
 - The `vars` directory contains variable files (main.yml) that define role-specific variables.
 - The `meta` directory stores metadata about the role, such as dependencies.
-- The `group_vars` and host_vars directories store variable files specific to groups or hosts.
 - The `handlers` directory contains handler files that define actions triggered by events.
 - The `files` directory stores static files that need to be copied to remote hosts.
 - The `defaults` directory contains default variable files that provide default values.
