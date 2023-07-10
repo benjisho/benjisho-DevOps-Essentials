@@ -6,7 +6,7 @@ In this exercise, you will learn how to set up a CI pipeline using Jenkins. By t
 
 - [Prerequisites](#prerequisites)
 - [Step 1: Install Jenkins on your Ubuntu machine](#step-1-install-jenkins-on-your-ubuntu-machine)
-  - [Table of Contents](#table-of-contents)
+  - [Jenkins File Structure](#jenkins-file-structure)
 - [Step 2: Access Jenkins and set up the initial configuration](#step-2-access-jenkins-and-set-up-the-initial-configuration)
 - [Step 3: Set up a basic CI pipeline](#step-3-set-up-a-basic-ci-pipeline)
 - [Step 4: Trigger the CI pipeline](#step-4-trigger-the-ci-pipeline)
