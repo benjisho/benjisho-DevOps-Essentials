@@ -174,15 +174,40 @@ Before starting this exercise, ensure that you have the following:
 11. This action will trigger the pipeline execution based on the configuration defined in the file.
 
 ### Bonus Step Details
-In this advanced configuration:
- - The `build_job` stage uses the `docker:latest` image and includes the `docker:dind` service, which allows running Docker commands inside the CI/CD environment.
- - The `script` section for the `build_job` includes additional steps to log in to Docker Hub (`docker login`) using the provided `$DOCKER_USERNAME` and `$DOCKER_PASSWORD` environment variables, and push the built image to the Docker Hub repository with the appropriate tag.
- - The `test_job` stage runs integration tests by executing `pytest` inside the `my-ubuntu-image` container.
-   - It also checks the installed packages by running the `dpkg -s` command for `build-essential`, `curl`, `git`, and `vim` inside the container.
- - The `deploy_job` stage deploys the application by running the `docker run` command to start a container named `my-ubuntu-app` using the `my-ubuntu-image`.
- - The `rules` section specifies the execution rules for the jobs.
-   - The `test_job` and `deploy_job` will only be executed on success of previous stages.
-   - The `deploy_job` allows failure, meaning if it encounters an error, it will not fail the overall pipeline.
+Let's break down the details of each section:
+1. **`build_job` Stage:**
+    - The `build_job` stage is defined with the `build` keyword.
+        - It uses the `docker:latest` image, which represents the latest version of Docker available at the time of the configuration.
+        - The `docker:dind` service is included, which stands for "Docker in Docker" and allows running Docker commands inside the CI/CD environment.
+        - The `script` section contains the following commands:
+            - `docker build -t my-ubuntu-image .`: Builds a Docker image with the tag `my-ubuntu-image` using the Dockerfile located in the current directory `(.)`.
+            - `docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD`: Logs in to Docker Hub using the provided `$DOCKER_USERNAME` and `$DOCKER_PASSWORD` environment variables. This step is necessary for pushing the image to the Docker Hub repository.
+            - `docker push $DOCKER_USERNAME/my-ubuntu-image`: Pushes the built image to the Docker Hub repository under the `$DOCKER_USERNAME` account.
+
+2. **`test_job` Stage:**
+    - The `test_job` stage is defined with the `test` keyword.
+    - The `script` section contains the following commands:
+        - `echo "Running integration tests..."`: Prints a message indicating that integration tests are being executed.
+        - `docker run --rm my-ubuntu-image pytest`: Runs the `pytest` command inside the `my-ubuntu-image` container to execute integration tests.
+        - `echo "Checking installed packages..."`: Prints a message indicating that the installed packages are being checked.
+        - `docker run --rm my-ubuntu-image bash -c "dpkg -s build-essential curl git vim"`: Runs the `dpkg -s` command inside the `my-ubuntu-image` container to check the status of specific packages (`build-essential`, `curl`, `git`, and `vim`).
+
+3. **`deploy_job` Stage:**
+    - The `deploy_job` stage is defined with the `deploy` keyword.
+    - The `script` section contains the following commands:
+        - `echo "Deploying the application..."`: Prints a message indicating that the application is being deployed.
+        - `docker run -d --name my-ubuntu-app my-ubuntu-image`: Runs the `my-ubuntu-image` Docker container in detached mode with the name `my-ubuntu-app`.
+        - `echo "Application deployed successfully!"`: Prints a message indicating that the application has been deployed successfully.
+
+4. **`rules` Section:**
+    - The `rules` section specifies the execution rules for the jobs.
+    - The first rule is for the `test_job` and is defined as follows:
+        - `if: $CI_JOB_NAME == "test_job"`: Checks if the current job's name is `test_job`.
+        - `when: on_success`: Specifies that the job should only be executed if the previous stages and jobs were successful.
+    - The second rule is for the `deploy_job` and is defined as follows:
+        - `if: $CI_JOB_NAME == "deploy_job"`: Checks if the current job's name is `deploy_job`.
+        - `when: on_success`: Specifies that the job should only be executed if the previous stages and jobs were successful.
+        - `allow_failure: true`: Allows the `deploy_job` to fail without failing the overall pipeline. This is useful when the deployment is not critical to the success of the pipeline.
 
 Congratulations! You now have an advanced CI/CD pipeline configuration that builds a Docker image, runs tests, and prepares for deployment.
 
