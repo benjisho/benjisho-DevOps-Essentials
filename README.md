@@ -12,6 +12,9 @@ Whether you're a network or a system engineer looking to enhance your expertise 
 - [Infrastructure as Code (IaC)](#infrastructure-as-code-iac)
   - [Ansible](#ansible)
   - [Terraform](#terraform)
+- [Containerization](#containerization)
+  - [Docker](#docker)
+  - [Kubernetes](#kubernetes)
 - [Monitoring](#monitoring)
   - [Prometheus](#prometheus)
   - [Grafana](#grafana)
@@ -69,6 +72,28 @@ Terraform is another popular IaC tool that allows you to define and provision in
 Follow this exercise to learn how to provision infrastructure resources using Terraform. By the end of this exercise, you'll have hands-on experience with defining infrastructure configurations, creating and managing infrastructure resources in your preferred cloud environment.
 
 [Exercise Details](exercises/terraform-provisioning.md)
+
+## Containerization
+
+### Docker
+
+Docker is a popular platform for developing, shipping, and running applications in containers. It allows you to package your application and its dependencies into a container image, ensuring consistency across different environments.
+
+#### Exercise: Getting Started with Docker
+
+Follow this exercise to learn the basics of Docker, including how to create, run, and manage containers. By the end of this exercise, you'll be familiar with Docker and its core concepts.
+
+[Exercise Details](exercises/docker-basics.md)
+
+### Kubernetes
+
+Kubernetes is an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications. It provides a robust and flexible infrastructure for running distributed systems and microservices.
+
+#### Exercise: Getting Started with Kubernetes
+
+Follow this exercise to learn the fundamentals of Kubernetes, including how to deploy applications, manage pods, and scale resources. By the end of this exercise, you'll have a working knowledge of Kubernetes and be able to deploy and manage applications in a Kubernetes cluster.
+
+[Exercise Details](exercises/kubernetes-basics.md)
 
 ## Monitoring
 
