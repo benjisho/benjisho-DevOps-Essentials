@@ -2,6 +2,15 @@
 
 In this exercise, you will learn the basics of Docker, including how to create, run, and manage containers. Docker is a powerful tool for containerization, which allows you to package applications and their dependencies into isolated containers, ensuring consistency and portability across different environments.
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Step 1: Running Your First Container](#step-1-running-your-first-container)
+- [Step 2: Creating a Custom Docker Image](#step-2-creating-a-custom-docker-image)
+- [Step 3: Managing Containers](#step-3-managing-containers)
+- [Conclusion](#conclusion)
+- [Advanced Exercise: Docker Compose](#advanced-exercise-docker-compose)
+
 ## Prerequisites
 
 Before you start this exercise, ensure that you have Docker installed on your machine. You can download and install Docker from the official website: [Docker Download](https://www.docker.com/products/docker-desktop)
