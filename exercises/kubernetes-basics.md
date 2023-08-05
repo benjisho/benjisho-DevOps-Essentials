@@ -1,6 +1,13 @@
 # Exercise: Getting Started with Kubernetes
 In this exercise, we will learn the fundamentals of Kubernetes, an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications. Kubernetes provides a robust and flexible infrastructure for running distributed systems and microservices.
 
+## Table of Contents
+
+- [Step 1: Deploying Your First Pod](#step-1-deploying-your-first-pod)
+- [Step 2: Deploying a Service](#step-2-deploying-a-service)
+- [Step 3: Scaling the Application](#step-3-scaling-the-application)
+- [Conclusion](#conclusion)
+
 ## Prerequisites
 Before you start this exercise, ensure that you have the following prerequisites:
 
